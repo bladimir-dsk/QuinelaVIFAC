@@ -8,17 +8,21 @@ export default function AppFooter() {
           {/* VIFAC Info */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-black text-xl">V</span>
+              <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
+                <img
+                  src="/Logo-vifac.webp"
+                  alt="VIFAC Logo"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div>
-                <h3 className="font-black text-2xl">VIFAC</h3>
-                <p className="text-emerald-400 text-sm font-medium">Mundial 2026</p>
+                <h3 className="font-black text-2xl leading-none">VIFAC</h3>
+                <p className="text-emerald-400 text-sm font-medium leading-none">Mundial 2026</p>
               </div>
             </div>
             <p className="text-gray-300 leading-relaxed mb-4">
-              Institución sin fines de lucro dedicada al cuidado de la salud y bienestar 
-              de las mujeres embarazadas, brindándoles servicios gratuitos de acompañamiento 
+              Institución sin fines de lucro dedicada al cuidado de la salud y bienestar
+              de las mujeres embarazadas, brindándoles servicios gratuitos de acompañamiento
               y superación personal.
             </p>
             <p className="text-emerald-400 font-semibold">
@@ -81,15 +85,6 @@ export default function AppFooter() {
               </a>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Mundial 2026 Badge */}
-      <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-sky-600 py-3">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <p className="text-white font-bold text-sm">
-            ⚽ Copa Mundial FIFA 2026 • México • Estados Unidos • Canadá
-          </p>
         </div>
       </div>
     </footer>
