@@ -1,0 +1,154 @@
+import React, { useState, useRef, useEffect } from 'react';
+import {
+    User,
+    Bell,
+    Settings,
+    LogOut,
+    Menu as MenuIcon,
+    ChevronDown
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
+
+export default function AdminNavbar({ collapsed, onToggle, isMobile }) {
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
+
+    const userMenuItems = [
+        {
+            key: 'profile',
+            icon: <User size={16} />,
+            label: 'Mi perfil',
+            onClick: () => {
+                navigate('/admin/perfil');
+                setDropdownOpen(false);
+            },
+        },
+        {
+            key: 'settings',
+            icon: <Settings size={16} />,
+            label: 'Configuración',
+            onClick: () => {
+                navigate('/admin/configuracion');
+                setDropdownOpen(false);
+            },
+        },
+        {
+            type: 'divider',
+        },
+        {
+            key: 'logout',
+            icon: <LogOut size={16} />,
+            label: 'Cerrar sesión',
+            onClick: () => {
+                handleLogout();
+                setDropdownOpen(false);
+            },
+            danger: true,
+        },
+    ];
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropdownOpen(false);
+            }
+        };
+
+        if (dropdownOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [dropdownOpen]);
+
+    return (
+        <header
+            className="bg-white shadow-sm px-4 flex items-center fixed top-0 right-0 z-40"
+            style={{
+                height: '64px',
+                width: isMobile ? '100%' : (collapsed ? 'calc(100% - 80px)' : 'calc(100% - 200px)'),
+                transition: 'width 0.2s',
+                left: isMobile ? 0 : 'auto',
+            }}
+        >
+            {/* Toggle sidebar button */}
+            <button
+                onClick={onToggle}
+                className="text-gray-600 hover:text-gray-900 transition-colors p-2 rounded-lg hover:bg-gray-100"
+            >
+                <MenuIcon size={24} />
+            </button>
+
+            {/* Acciones de la derecha */}
+            <div className="flex items-center ml-auto">
+                {/* Usuario */}
+                <div className="relative" ref={dropdownRef}>
+                    <button
+                        onClick={() => setDropdownOpen(!dropdownOpen)}
+                        className="flex items-center gap-3 cursor-pointer rounded-lg transition-colors p-2 hover:bg-gray-50"
+                    >
+                        <div className="flex flex-col text-right space-y-1">
+                            <span className="text-sm font-medium text-gray-900">
+                                {user?.name || 'Admin'}
+                            </span>
+                            <span className="text-xs text-gray-500">
+                                Administrador
+                            </span>
+                        </div>
+                        <div
+                            className="rounded-full flex items-center justify-center"
+                            style={{
+                                width: '40px',
+                                height: '40px',
+                                background: '#00b8db'
+                            }}
+                        >
+                            <User size={16} className="text-white" />
+                        </div>
+                        <ChevronDown size={16} className="text-gray-500" />
+                    </button>
+
+                    {/* Dropdown Menu */}
+                    {dropdownOpen && (
+                        <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-1">
+                            {userMenuItems.map((item) => {
+                                if (item.type === 'divider') {
+                                    return (
+                                        <div
+                                            key={item.key || 'divider'}
+                                            className="border-t border-gray-200 my-1"
+                                        />
+                                    );
+                                }
+
+                                return (
+                                    <button
+                                        key={item.key}
+                                        onClick={item.onClick}
+                                        className={`w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors ${item.danger
+                                            ? 'text-red-600 hover:bg-red-50'
+                                            : 'text-gray-700 hover:bg-gray-50'
+                                            }`}
+                                    >
+                                        {item.icon}
+                                        <span>{item.label}</span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
+            </div>
+        </header>
+    );
+}
