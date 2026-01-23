@@ -56,8 +56,8 @@ const PhaseModal_Admin = ({
         if (!formValues) return false;
 
         return formValues.name?.trim() &&
-            formValues.flagUrl?.trim() &&
-            /^https?:\/\/.+/.test(formValues.flagUrl);
+            formValues.order &&
+            formValues.order > 0;
     };
 
     const handleSubmit = async () => {
