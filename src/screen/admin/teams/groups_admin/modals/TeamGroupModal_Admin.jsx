@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { X, Users } from 'lucide-react';
-import { Modal, Form, Input, Select, Button, message } from 'antd';
+import { useState, useEffect } from 'react';
+import { X } from 'lucide-react';
+import { Form, Input, Select, Button, message } from 'antd';
 import { useApi } from '../../../../../hooks/useApi';
 
 const TeamGroupModal_Admin = ({
@@ -98,17 +98,17 @@ const TeamGroupModal_Admin = ({
     return (
         <>
             <div
-                className="fixed inset-0 bg-black opacity-50 z-50 transition-opacity"
+                className="fixed inset-0 bg-black  opacity-50 z-50 transition-opacity"
                 onClick={handleCancel}
             />
 
             <div className="fixed inset-0 z-50 flex items-center backdrop-blur-md justify-center p-4 overflow-y-auto">
                 <div
-                    className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] flex flex-col"
+                    className="bg-white dark:bg-zinc-900 rounded-lg shadow-xl w-full max-w-md max-h-[90vh] flex flex-col"
                     onClick={(e) => e.stopPropagation()}>
                     {/* Header */}
-                    <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                        <h2 className="text-lg font-semibold text-gray-900">
+                    <div className="flex items-center justify-between p-4 border-b dark:border-zinc-700 border-gray-200">
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-50">
                             {isEditing ? 'Editar grupo' : 'Agregar grupo'}
                         </h2>
                         <button onClick={handleCancel}>
@@ -193,7 +193,7 @@ const TeamGroupModal_Admin = ({
                     </div>
 
                     {/* Footer */}
-                    <div className="flex items-center justify-end gap-3 p-4 border-t border-gray-200">
+                    <div className="flex items-center justify-end gap-3 p-4 border-t dark:border-zinc-700 border-gray-200">
                         <Button
                             type="primary" 
                             danger

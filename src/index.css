@@ -7,9 +7,52 @@
 body,
 html {
     font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-     margin: 0;
-     padding: 0;
+    margin: 0;
+    padding: 0;
 }
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+/* Scrollbar base */
+*::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* ==== MODO CLARO ==== */
+:root {
+    --scroll-track: #e5e7eb;
+    /* gris claro */
+    --scroll-thumb: #2b7fff;
+}
+
+/* ==== MODO OSCURO ==== */
+.dark {
+    --scroll-track: #1f2937;
+    /* gris oscuro */
+    --scroll-thumb: #2b7fff;
+}
+
+/* Chrome, Edge, Opera */
+*::-webkit-scrollbar-track {
+    background: var(--scroll-track);
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--scroll-thumb);
+    border-radius: 8px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: var(--scroll-thumb);
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+}
+
 
 /* Estilos personalizados para los inputs de Ant Design */
 
@@ -28,7 +71,7 @@ html {
 .inputAntd.ant-input-affix-wrapper:focus,
 .inputAntd.ant-input-affix-wrapper-focused {
     border-color: #00b8db;
-    box-shadow: 0 0 0 2px rgba(0,184,219, 0.2);
+    box-shadow: 0 0 0 2px rgba(0, 184, 219, 0.2);
 }
 
 
@@ -68,3 +111,9 @@ html {
 /* ------------------------------------------------ */
 
 /* Estilos SOLO para componentes de Ant Design en dark mode */
+
+/* Hover para el botón OK del modal de confirmación */
+.ant-modal-confirm .ant-btn-primary:hover {
+  background-color: #006600 !important; /* verde más oscuro */
+  border-color: #006600 !important;
+}

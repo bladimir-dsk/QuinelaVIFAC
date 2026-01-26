@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, theme as antdTheme } from 'antd';
 import {
     LayoutDashboard,
     Trophy,
@@ -12,15 +12,17 @@ import {
     House
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useDarkMode } from '../../hooks/useDarkMode';
+import { useDarkMode } from '../../context/DarkModeContext';
 import { useAuth } from '../../hooks/useAuth';
 const { Sider } = Layout;
+const { useToken } = antdTheme;
 
 export default function ParticipantSidebar({ collapsed, onCollapse }) {
     const navigate = useNavigate();
     const location = useLocation();
     const { logout } = useAuth();
     const { isDarkMode, toggleDarkMode } = useDarkMode();
+    const { token } = useToken();
 
     const menuItems = [
         {
@@ -29,9 +31,9 @@ export default function ParticipantSidebar({ collapsed, onCollapse }) {
             label: 'Inicio',
         },
         {
-            key: '#',
+            key: '/participante/predicciones',
             icon: <UsersRound size={18} />,
-            label: 'Mi Equipo',
+            label: 'Predicciones',
         },
         {
             key: '#',
@@ -57,7 +59,7 @@ export default function ParticipantSidebar({ collapsed, onCollapse }) {
     const getSelectedKey = () => {
         const exactMatch = menuItems.find(item => item.key === location.pathname);
         if (exactMatch) return [location.pathname];
-        return ['/participante/dashboard'];
+        return ['/participante/home'];
     };
 
     return (
@@ -67,7 +69,9 @@ export default function ParticipantSidebar({ collapsed, onCollapse }) {
             onCollapse={onCollapse}
             breakpoint="lg"
             width={200}
+            trigger={null}
             collapsedWidth={80}
+            theme={isDarkMode ? 'dark' : 'light'}
             style={{
                 overflow: 'auto',
                 height: '100vh',
@@ -75,18 +79,40 @@ export default function ParticipantSidebar({ collapsed, onCollapse }) {
                 left: 0,
                 top: 0,
                 bottom: 0,
-                background: '#ffffff',
-                borderRight: '1px solid #e5e7eb',
+                backgroundColor: token.colorBgContainer,
+                borderRight: `1px solid ${token.colorBorderSecondary}`,
             }}
         >
-            <div className="flex flex-col h-full bg-white">
-                <div className="h-16 flex items-center justify-center border-b border-gray-200 bg-white">
+            <div
+                className="flex flex-col h-full"
+                style={{
+                    backgroundColor: token.colorBgContainer,
+                    color: token.colorText
+                }}
+            >
+                <div
+                    className="h-16 flex items-center justify-center"
+                    style={{
+                        borderBottom: `1px solid ${token.colorBorderSecondary}`,
+                        backgroundColor: token.colorBgContainer
+                    }}
+                >
                     {!collapsed ? (
                         <div className="flex items-center space-x-2">
                             <img src="/Logo-vifac.webp" alt="VIFAC" className="w-10 h-10" />
                             <div>
-                                <h1 className="text-base font-bold text-gray-800 leading-none mb-0">VIFAC</h1>
-                                <h1 className="text-xs text-gray-500 leading-none mt-0">Mundial 2026</h1>
+                                <h1
+                                    className="text-base font-bold leading-none mb-0"
+                                    style={{ color: token.colorText }}
+                                >
+                                    VIFAC
+                                </h1>
+                                <h1
+                                    className="text-xs leading-none mt-0"
+                                    style={{ color: token.colorTextSecondary }}
+                                >
+                                    Mundial 2026
+                                </h1>
                             </div>
                         </div>
                     ) : (
@@ -94,7 +120,7 @@ export default function ParticipantSidebar({ collapsed, onCollapse }) {
                     )}
                 </div>
 
-                <div className="flex-1 overflow-y-auto bg-white">
+                <div className="flex-1 overflow-y-auto">
                     <Menu
                         mode="inline"
                         selectedKeys={getSelectedKey()}
@@ -102,25 +128,45 @@ export default function ParticipantSidebar({ collapsed, onCollapse }) {
                         onClick={handleMenuClick}
                         style={{
                             border: 0,
-                            background: '#ffffff'
+                            backgroundColor: token.colorBgContainer
                         }}
                     />
                 </div>
 
-                <div className="border-t border-gray-200 p-2 space-y-2 bg-white">
+                <div
+                    className="p-2 space-y-2"
+                    style={{
+                        borderTop: `1px solid ${token.colorBorderSecondary}`,
+                        backgroundColor: token.colorBgContainer
+                    }}
+                >
                     <div>
                         <button
                             onClick={toggleDarkMode}
-                            className="w-full flex items-center justify-center space-x-2 py-3 rounded-lg transition-colors bg-gray-200 hover:bg-gray-500 text-gray-800"
+                            className="w-full flex items-center justify-center space-x-2 py-3 rounded-lg transition-colors"
+                            style={{
+                                backgroundColor: token.colorBgTextHover,
+                                color: token.colorText
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor = token.colorBgTextActive;
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = token.colorBgTextHover;
+                            }}
                         >
                             {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
                             {!collapsed && <span className="text-sm">Modo {isDarkMode ? 'Claro' : 'Oscuro'}</span>}
                         </button>
                     </div>
+
                     <div>
                         <button
                             onClick={handleLogout}
-                            className="w-full flex items-center justify-center space-x-2 py-3 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors"
+                            className="w-full flex items-center justify-center space-x-2 py-3 rounded-lg text-white transition-colors"
+                            style={{ backgroundColor: token.colorError }}
+                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = token.colorErrorHover}
+                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = token.colorError}
                         >
                             <LogOut size={18} />
                             {!collapsed && <span className="text-sm">Cerrar sesión</span>}

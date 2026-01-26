@@ -3,11 +3,13 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import {
     AdminDashboard,
     AdminManagementTeamScreen_Admin,
+    AdminMatchesRegistrationScreen_Admin,
     AdminPhasesRegistrationScreen,
     AdminTeamGroupsScreen_Admin,
     LandingPage,
     Login,
-    ParticipantHomeScreen
+    ParticipantHomeScreen,
+    PredictionsScreen_Participant
 } from './lazyComponents'
 import { ProtectedRoute } from './ProtectedRoute'
 import ParticipantLayout from '../components/layout/ParticipantLayout'
@@ -29,6 +31,7 @@ export default function RouteApp() {
                     <Route path='equipos/gestion' element={<AdminManagementTeamScreen_Admin />} />
                     <Route path='fases' element={<AdminPhasesRegistrationScreen />} />
                     <Route path='equipos/grupos' element={<AdminTeamGroupsScreen_Admin />} />
+                    <Route path='partidos' element={<AdminMatchesRegistrationScreen_Admin />} />
                 </Route>
 
                 {/* Participante */}
@@ -38,6 +41,7 @@ export default function RouteApp() {
                 </ProtectedRoute>}>
                     <Route index element={<Navigate to="/participante/home" replace />} />
                     <Route path='home' element={<ParticipantHomeScreen />} />
+                    <Route path='predicciones' element={<PredictionsScreen_Participant />} />
                 </Route>
 
                 <Route path='*' element={<Navigate to="/" replace />} />

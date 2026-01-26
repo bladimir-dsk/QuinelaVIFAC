@@ -112,11 +112,11 @@ const TeamModal_Admin = ({
 
             <div className="fixed inset-0 z-50 flex items-center backdrop-blur-md justify-center p-4 overflow-y-auto">
                 <div
-                    className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] flex flex-col"
+                    className="bg-white dark:bg-zinc-900 rounded-lg shadow-xl w-full max-w-md max-h-[90vh] flex flex-col"
                     onClick={(e) => e.stopPropagation()}>
                     {/* Header */}
-                    <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                        <h2 className="text-lg font-semibold text-gray-900">
+                    <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-zinc-700">
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-50">
                             {isEditing ? 'Editar equipo' : 'Agregar equipo'}
                         </h2>
                         <button
@@ -191,7 +191,7 @@ const TeamModal_Admin = ({
                     </div>
 
                     {/* Footer */}
-                    <div className="flex items-center justify-end gap-3 p-4 border-t border-gray-200">
+                    <div className="flex items-center justify-end gap-3 p-4 border-t dark:border-zinc-700 border-gray-200">
                         <Button
                             onClick={handleCancel}
                             size="large"

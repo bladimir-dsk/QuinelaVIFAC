@@ -54,7 +54,7 @@ export default function AdminLayout() {
                 />
                 
                 <Content
-                    className="mt-16 p-4 md:p-6 bg-gray-50"
+                    className="mt-16 p-4 md:p-6 bg-gray-100 dark:bg-zinc-900"
                     style={{
                         minHeight: 'calc(100vh - 64px)',
                     }}

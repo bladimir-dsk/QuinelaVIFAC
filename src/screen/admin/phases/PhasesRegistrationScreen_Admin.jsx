@@ -4,6 +4,7 @@ import { Button, Input, Space, Table, Tag, Tooltip, notification } from "antd";
 import Highlighter from "react-highlight-words";
 import { useApi } from "../../../hooks/useApi";
 import PhaseModal_Admin from "./modals/PhaseModal_Admin";
+import { useDeleteConfirmation } from "../../../hooks/useDeleteConfirmation";
 
 export default function PhasesRegistrationScreen_Admin() {
     const [searchText, setSearchText] = useState("");
@@ -133,22 +134,20 @@ export default function PhasesRegistrationScreen_Admin() {
         closeModal("edit");
     };
 
-    const handleDelete = async (record) => {
-        try {
-            await deletePhase(record.id_phase);
-            api.success({
-                title: "Fase eliminada",
-                description: `La fase "${record.name}" ha sido eliminada correctamente`,
-                placement: "topRight",
-            });
-        } catch (error) {
-            api.error({
-                title: "Error al eliminar",
-                description: error.message || "No se pudo eliminar la fase",
-                placement: "topRight",
-            });
-        }
+    const showDeleteConfirm = useDeleteConfirmation({
+        onDelete: deletePhase,
+    });
+
+    const handleDelete = (record) => {
+        showDeleteConfirm({
+            title: '¿Estás seguro de eliminar esta fase?',
+            itemName: record.name,
+            entityName: 'la fase',
+            recordId: record.id_phase,
+            successTitle: 'Fase eliminada',
+        });
     };
+
 
     const handleEdit = (record) => {
         openModal("edit", record);
@@ -244,7 +243,7 @@ export default function PhasesRegistrationScreen_Admin() {
             </div>
 
             {/* Tabla */}
-            <div className="bg-white rounded-lg shadow-sm p-4">
+            <div className="bg-white dark:bg-[#141414] rounded-lg shadow-sm p-4">
                 <Table
                     columns={columns}
                     dataSource={dataSource}

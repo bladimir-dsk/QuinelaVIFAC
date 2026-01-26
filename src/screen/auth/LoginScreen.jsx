@@ -114,22 +114,21 @@ export default function LoginScreen() {
             {contextHolder}
             <div className="flex h-screen">
                 {/* Formulario de login - lado izquierdo */}
-                <div className="flex items-center justify-center w-full lg:w-1/3 bg-white px-6 lg:px-16">
+                <div className="flex items-center justify-center w-full lg:w-1/3 bg-white dark:bg-zinc-950 px-6 lg:px-16">
                     <div className="w-full max-w-md">
-                        <h2 className="text-2xl font-medium text-gray-900 mb-10 ">
+                        <h2 className="text-2xl font-medium text-gray-900 dark:text-white mb-10 ">
                             Inicia sesión para ingresar
                         </h2>
 
                         <div>
                             <div className="mb-4 mt-10">
-                                <label className="block text-gray-700 mb-2">
+                                <label className="block text-gray-700 dark:text-gray-200 mb-2">
                                     Correo electrónico
                                 </label>
                                 <Input
                                     value={formData.email}
                                     onChange={(e) => handleInputChange('email', e.target.value)}
                                     onKeyPress={handleKeyPress}
-                                    className='inputAntd'
                                     prefix={<UserOutlined className="text-gray-400" />}
                                     placeholder="Ingrese su correo electrónico"
                                     size="large"
@@ -142,7 +141,7 @@ export default function LoginScreen() {
                             </div>
 
                             <div className="mb-4">
-                                <label className="block text-gray-700 mb-2">
+                                <label className="block text-gray-700 dark:text-gray-200  mb-2">
                                     Contraseña
                                 </label>
                                 <Input.Password
@@ -151,7 +150,6 @@ export default function LoginScreen() {
                                     onKeyPress={handleKeyPress}
                                     prefix={<LockOutlined className="text-gray-400" />}
                                     placeholder="Ingrese su contraseña"
-                                    className='inputAntd'
                                     size="large"
                                     disabled={loading}
                                     status={errors.password ? 'error' : ''}
@@ -166,7 +164,7 @@ export default function LoginScreen() {
                                     type="primary"
                                     loading={loading}
                                     size="large"
-                                    className="w-40 butomAntd"
+                                    className="w-40"
                                     disabled={loading}
                                     onClick={handleLogin}
                                 >
@@ -182,7 +180,7 @@ export default function LoginScreen() {
                 </div>
 
                 {/* Panel informativo - lado derecho */}
-                <div className="hidden lg:flex lg:w-2/3 relative overflow-hidden bg-linear-to-br from-cyan-600 via-emerald-700 to-teal-700">
+                <div className="hidden lg:flex lg:w-2/3 relative overflow-hidden bg-linear-to-br from-cyan-600 via-cyan-700 to-cyan-700">
                     <div className="absolute inset-0">
                         <div className="absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl animate-float"></div>
                         <div className="absolute bottom-20 right-10 w-96 h-96 bg-teal-400/20 rounded-full blur-3xl animate-float-delayed"></div>

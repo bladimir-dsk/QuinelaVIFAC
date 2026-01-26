@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
     User,
-    Bell,
     Settings,
     LogOut,
     Menu as MenuIcon,
-    ChevronDown
+    ChevronDown,
+    X
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
@@ -73,20 +73,18 @@ export default function AdminNavbar({ collapsed, onToggle, isMobile }) {
 
     return (
         <header
-            className="bg-white shadow-sm px-4 flex items-center fixed top-0 right-0 z-40"
+            className="bg-white dark:bg-[#141414] px-4 flex items-center fixed top-0 right-0 z-40"
             style={{
                 height: '64px',
                 width: isMobile ? '100%' : (collapsed ? 'calc(100% - 80px)' : 'calc(100% - 200px)'),
                 transition: 'width 0.2s',
                 left: isMobile ? 0 : 'auto',
-            }}
-        >
+            }}>
             {/* Toggle sidebar button */}
             <button
                 onClick={onToggle}
-                className="text-gray-600 hover:text-gray-900 transition-colors p-2 rounded-lg hover:bg-gray-100"
-            >
-                <MenuIcon size={24} />
+                className="text-gray-600 hover:text-gray-900 dark:text-white hover:dark:text-black transition-colors p-2 rounded-lg hover:bg-cyan-200/50 dark:hover:bg-cyan-700/30">
+                    {collapsed ?  <MenuIcon  size={20} /> : <X size={20} />}
             </button>
 
             {/* Acciones de la derecha */}
@@ -95,13 +93,13 @@ export default function AdminNavbar({ collapsed, onToggle, isMobile }) {
                 <div className="relative" ref={dropdownRef}>
                     <button
                         onClick={() => setDropdownOpen(!dropdownOpen)}
-                        className="flex items-center gap-3 cursor-pointer rounded-lg transition-colors p-2 hover:bg-gray-50"
+                        className="flex items-center gap-3 cursor-pointer rounded-lg transition-colors p-2 hover:bg-cyan-200/50 dark:hover:bg-cyan-700/30"
                     >
                         <div className="flex flex-col text-right space-y-1">
-                            <span className="text-sm font-medium text-gray-900">
+                            <span className="text-sm font-medium text-gray-900 dark:text-white">
                                 {user?.name || 'Admin'}
                             </span>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-500 dark:text-gray-400">
                                 Administrador
                             </span>
                         </div>

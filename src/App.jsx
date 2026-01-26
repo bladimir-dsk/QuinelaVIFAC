@@ -1,19 +1,40 @@
 import { BrowserRouter } from 'react-router-dom'
 import RouteApp from './routes/RouteApp'
 import { AuthProvider } from './context/AuthProvider'
-import { useDarkMode } from './hooks/useDarkMode';
-import { ConfigProvider, theme } from 'antd';
+import { ConfigProvider, theme, App as AntApp } from 'antd';
+import { DarkModeProvider, useDarkMode } from './context/DarkModeContext';
+import esES from 'antd/locale/es_ES';
 
-function App() {
-
+function ThemedApp() {
   const { isDarkMode } = useDarkMode();
 
   return (
-      <BrowserRouter>
-        <AuthProvider>
-          <RouteApp />
-        </AuthProvider>
-      </BrowserRouter>
+    <ConfigProvider
+      locale={esES}
+      theme={{
+        algorithm: isDarkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
+        token: {
+          colorPrimary: '#00b8db',
+          borderRadius: 6,
+        },
+      }}
+    >
+      <AntApp>
+        <RouteApp />
+      </AntApp>
+    </ConfigProvider>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <DarkModeProvider>
+          <ThemedApp />
+        </DarkModeProvider>
+      </AuthProvider>
+    </BrowserRouter>
   )
 }
 

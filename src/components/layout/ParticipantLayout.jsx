@@ -22,7 +22,7 @@ export default function ParticipantLayout() {
                 <ParticipantNavbar collapsed={collapsed} onToggle={() => setCollapsed(!collapsed)} />
                 
                 <Content
-                    className="mt-16 p-6 bg-gray-100"
+                    className="mt-16 p-6 bg-gray-100 dark:bg-zinc-900"
                     style={{
                         minHeight: 'calc(100vh - 64px)',
                     }}

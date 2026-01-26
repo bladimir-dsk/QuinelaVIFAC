@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function LoadingFallback() {
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
+        <div className="fixed inset-0 flex items-center justify-center bg-white dark:bg-zinc-900">
             <div className="flex flex-col items-center gap-6">
                 {/* Spinner principal */}
                 <div className="relative">
@@ -14,7 +14,7 @@ export default function LoadingFallback() {
 
                 {/* Texto */}
                 <div className="flex flex-col items-center gap-2">
-                    <p className="text-lg font-semibold text-black">
+                    <p className="text-lg font-semibold text-black dark:text-white">
                         Cargando...
                     </p>
                 </div>

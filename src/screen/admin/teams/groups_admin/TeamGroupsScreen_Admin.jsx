@@ -1,10 +1,10 @@
-// TeamGroupsScreen_Admin.jsx
-import React, { useRef, useState } from "react";
-import { SearchOutlined, PlusOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table, Tag, Tooltip, notification } from "antd";
+import { useRef, useState } from "react";
+import { SearchOutlined, PlusOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import { useApi } from "../../../../hooks/useApi";
 import TeamGroupModal_Admin from "./modals/TeamGroupModal_Admin";
+import { Button, Input, App, Space, Table, Tag, Tooltip, notification } from "antd";
+import { useDeleteConfirmation } from "../../../../hooks/useDeleteConfirmation";
 
 export default function TeamGroupsScreen_Admin() {
     const [searchText, setSearchText] = useState("");
@@ -15,6 +15,8 @@ export default function TeamGroupsScreen_Admin() {
         details: false,
     });
     const [selectedGroup, setSelectedGroup] = useState(null);
+
+    const { modal } = App.useApp();
 
     const searchInput = useRef(null);
     const [api, contextHolder] = notification.useNotification();
@@ -146,21 +148,18 @@ export default function TeamGroupsScreen_Admin() {
         closeModal("edit");
     };
 
-    const handleDelete = async (record) => {
-        try {
-            await deleteGroup(record.id_group);
-            api.success({
-                title: "Grupo eliminado",
-                description: `El grupo "${record.name}" ha sido eliminado correctamente`,
-                placement: "topRight",
-            });
-        } catch (error) {
-            api.error({
-                title: "Error al eliminar",
-                description: error.message || "No se pudo eliminar el grupo",
-                placement: "topRight",
-            });
-        }
+    const showDeleteConfirm = useDeleteConfirmation({
+        onDelete: deleteGroup,
+    });
+
+    const handleDelete = (record) => {
+        showDeleteConfirm({
+            title: '¿Estás seguro de eliminar este grupo?',
+            itemName: record.name,
+            entityName: 'el grupo',
+            recordId: record.id_group,
+            successTitle: 'Grupo eliminado',
+        });
     };
 
     const handleEdit = (record) => {
@@ -237,7 +236,7 @@ export default function TeamGroupsScreen_Admin() {
                             type="link"
                             icon={<EditOutlined />}
                             onClick={() => handleEdit(record)}
-                            style={{ color: "#2b7fff" }}
+                            style={{ color: "#52c41a" }}
                         />
                     </Tooltip>
                     <Tooltip title="Eliminar" color="red">
@@ -270,8 +269,7 @@ export default function TeamGroupsScreen_Admin() {
                         size="large"
                         icon={<PlusOutlined />}
                         onClick={() => openModal("add")}
-                        className="bg-white text-blue-600 hover:bg-green-50 border-0 shadow-md shrink-0"
-                    >
+                        className="bg-white text-blue-600 hover:bg-green-50 border-0 shadow-md shrink-0">
                         <span className="hidden sm:inline">Agregar Grupo</span>
                         <span className="sm:hidden">Agregar</span>
                     </Button>
@@ -279,7 +277,7 @@ export default function TeamGroupsScreen_Admin() {
             </div>
 
             {/* Tabla */}
-            <div className="bg-white rounded-lg shadow-sm p-4">
+            <div className="bg-white rounded-lg dark:bg-[#141414] shadow-sm p-4">
                 <Table
                     columns={columns}
                     dataSource={dataSource}

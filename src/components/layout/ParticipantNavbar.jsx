@@ -74,16 +74,15 @@ export default function ParticipantNavbar({ collapsed, onToggle }) {
 
     return (
         <header
-            className="bg-white border-b border-gray-200 px-4 flex items-center fixed top-0 right-0 z-40"
+            className="bg-white dark:bg-[#141414] px-4 flex items-center fixed top-0 right-0 z-40"
             style={{
                 height: '64px',
                 width: collapsed ? 'calc(100% - 80px)' : 'calc(100% - 200px)',
                 transition: 'width 0.2s',
-            }}
-        >
+            }}>
             <button
                 onClick={onToggle}
-                className="text-gray-600 hover:text-gray-900 transition-colors p-2 rounded-lg hover:bg-gray-100"
+                className="text-gray-600 dark:text-white hover:dark:text-black transition-colors p-2 rounded-lg hover:bg-cyan-200/50 dark:hover:bg-cyan-700/30"
             >
                 {collapsed ? <MenuIcon size={20} /> : <X size={20} />}
             </button>
@@ -92,13 +91,13 @@ export default function ParticipantNavbar({ collapsed, onToggle }) {
                 <div className="relative" ref={dropdownRef}>
                     <button
                         onClick={() => setDropdownOpen(!dropdownOpen)}
-                        className="flex items-center gap-3 cursor-pointer rounded-lg transition-colors p-2 hover:bg-gray-50"
+                        className="flex items-center gap-3 cursor-pointer rounded-lg transition-colors p-2 hover:bg-cyan-200/50 dark:hover:bg-cyan-700/30"
                     >
-                        <div className="flex flex-col justify-center text-right space-y-1">
-                            <span className="text-sm font-medium text-gray-900">
+                        <div className="flex flex-col justify-center  text-right space-y-1">
+                            <span className="text-sm font-medium dark:text-white text-gray-900">
                                 {user?.name || 'Participante'}
                             </span>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-500 dark:text-gray-400">
                                 Participante
                             </span>
                         </div>

@@ -9,7 +9,7 @@ export const useNotification = () => {
 
     const showSuccess = (message, description) => {
         api.success({
-            message: message || 'Éxito',
+            title: message || 'Éxito',
             description: description,
             placement: 'topRight',
             duration: 3,
@@ -18,7 +18,7 @@ export const useNotification = () => {
 
     const showError = (message, description) => {
         api.error({
-            message: message || 'Error',
+            title: message || 'Error',
             description: description,
             placement: 'topRight',
             duration: 4,
@@ -27,7 +27,7 @@ export const useNotification = () => {
 
     const showWarning = (message, description) => {
         api.warning({
-            message: message || 'Advertencia',
+            title: message || 'Advertencia',
             description: description,
             placement: 'topRight',
             duration: 3,
@@ -36,7 +36,7 @@ export const useNotification = () => {
 
     const showInfo = (message, description) => {
         api.info({
-            message: message || 'Información',
+            title: message || 'Información',
             description: description,
             placement: 'topRight',
             duration: 3,

@@ -4,6 +4,7 @@ import { Button, Input, Space, Table, Tag, Tooltip, notification, Avatar } from 
 import Highlighter from "react-highlight-words";
 import { useApi } from "../../../../hooks/useApi";
 import TeamModal_Admin from "./modals/TeamModal_Admin";
+import { useDeleteConfirmation } from "../../../../hooks/useDeleteConfirmation";
 
 export default function TeamManagementScreen_Admin() {
     const [searchText, setSearchText] = useState("");
@@ -132,21 +133,18 @@ export default function TeamManagementScreen_Admin() {
         closeModal("edit");
     };
 
-    const handleDelete = async (record) => {
-        try {
-            await deleteTeam(record.id_team);
-            api.success({
-                title: "Equipo eliminado",
-                description: `El equipo "${record.name}" ha sido eliminado correctamente`,
-                placement: "topRight",
-            });
-        } catch (error) {
-            api.error({
-                title: "Error al eliminar",
-                description: error.message || "No se pudo eliminar el equipo",
-                placement: "topRight",
-            });
-        }
+    const showDeleteConfirm = useDeleteConfirmation({
+        onDelete: deleteTeam,
+    });
+
+    const handleDelete = (record) => {
+        showDeleteConfirm({
+            title: '¿Estás seguro de eliminar este equipo?',
+            itemName: record.name,
+            entityName: 'el equipo',
+            recordId: record.id_team,
+            successTitle: 'Equipo eliminado',
+        });
     };
 
     const handleEdit = (record) => {
@@ -175,15 +173,15 @@ export default function TeamManagementScreen_Admin() {
                 <Avatar
                     src={flagUrl}
                     alt={record.name}
-                    size={48}
+                    size={38}
                     shape="square"
-                    style={{ border: '2px solid #f0f0f0' }}
+                    style={{ border: '1px solid #f0f0f0' }}
                     icon={<FlagOutlined />}
                 />
             ),
         },
         {
-            title: "Nombre del Equipo",
+            title: "Nombre del equipo",
             dataIndex: "name",
             key: "name",
             align: "center",
@@ -245,7 +243,7 @@ export default function TeamManagementScreen_Admin() {
             </div>
 
             {/* Tabla */}
-            <div className="bg-white rounded-lg shadow-sm p-4">
+            <div className="bg-white rounded-lg dark:bg-[#141414] shadow-sm p-4">
                 <Table
                     columns={columns}
                     dataSource={dataSource}
