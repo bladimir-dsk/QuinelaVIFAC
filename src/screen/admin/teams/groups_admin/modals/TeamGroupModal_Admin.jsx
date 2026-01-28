@@ -80,7 +80,7 @@ const TeamGroupModal_Admin = ({
                 return;
             }
 
-            message.error(error.message || 'No se pudo guardar el grupo');
+            message.error(error.response?.data?.message || error.message || 'No se pudo guardar el grupo');
         }
     };
 
@@ -195,7 +195,7 @@ const TeamGroupModal_Admin = ({
                     {/* Footer */}
                     <div className="flex items-center justify-end gap-3 p-4 border-t dark:border-zinc-700 border-gray-200">
                         <Button
-                            type="primary" 
+                            type="primary"
                             danger
                             onClick={handleCancel}
                             size="large"

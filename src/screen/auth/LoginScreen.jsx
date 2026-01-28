@@ -180,12 +180,9 @@ export default function LoginScreen() {
                 </div>
 
                 {/* Panel informativo - lado derecho */}
-                <div className="hidden lg:flex lg:w-2/3 relative overflow-hidden bg-linear-to-br from-cyan-600 via-cyan-700 to-cyan-700">
+                <div className="hidden lg:flex lg:w-2/3 relative overflow-hidden bg-linear-to-br from-cyan-500 to-gray-400 dark:to-zinc-900">
                     <div className="absolute inset-0">
-                        <div className="absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl animate-float"></div>
-                        <div className="absolute bottom-20 right-10 w-96 h-96 bg-teal-400/20 rounded-full blur-3xl animate-float-delayed"></div>
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-300/10 rounded-full blur-3xl animate-float-slow"></div>
-                        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.05)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+                        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.05)_1px,transparent_1px)] bg-size-[50px_50px]"></div>
                         <div className="absolute inset-0 opacity-[0.1]">
                             <div className="absolute top-10 left-20 text-9xl animate-spin-slow">⚽</div>
                             <div className="absolute top-40 right-32 text-7xl animate-spin-reverse">⚽</div>

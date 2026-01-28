@@ -26,12 +26,12 @@ const MatchModal_Admin = ({
     // API Hooks
     const { postData: createMatch, loading: creatingMatch } = useApi('/matches', {}, false);
     const { patchData: updateMatch, loading: updatingMatch } = useApi('/matches', {}, false);
-    
+
     // Obtener equipos del grupo seleccionado
-    const { 
-        data: groupDetailsData, 
+    const {
+        data: groupDetailsData,
         loading: loadingGroupDetails,
-        fetchData: fetchGroupDetails 
+        fetchData: fetchGroupDetails
     } = useApi(`/groups/${selectedGroup}`, {}, false);
 
     // Función para comparar si hay cambios
@@ -196,7 +196,7 @@ const MatchModal_Admin = ({
                             onValuesChange={checkForChanges}
                         >
                             <Row gutter={16}>
-                                {/* Primera columna */}
+                                {/* Fase */}
                                 <Col xs={24} md={12}>
                                     <Form.Item
                                         name="id_phase"
@@ -220,70 +220,9 @@ const MatchModal_Admin = ({
                                             }))}
                                         />
                                     </Form.Item>
-
-                                    <Form.Item
-                                        name="id_teamA"
-                                        label="Equipo A"
-                                        rules={[
-                                            { required: true, message: 'El equipo A es requerido' },
-                                        ]}
-                                    >
-                                        <Select
-                                            placeholder={
-                                                !selectedGroup 
-                                                    ? "Primero selecciona un grupo"
-                                                    : "Selecciona el equipo A"
-                                            }
-                                            size="large"
-                                            showSearch
-                                            disabled={!selectedGroup}
-                                            loading={loadingGroupDetails}
-                                            optionFilterProp="children"
-                                            filterOption={(input, option) =>
-                                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                            }
-                                            notFoundContent={
-                                                !selectedGroup 
-                                                    ? "Selecciona un grupo primero"
-                                                    : !hasTeams 
-                                                        ? "No hay equipos en este grupo" 
-                                                        : "No se encontraron resultados"
-                                            }
-                                            onChange={handleTeamAChange}
-                                            options={availableTeamsForA?.map((team) => ({
-                                                value: team.id_team,
-                                                label: team.name,
-                                            }))}
-                                            optionRender={(option) => {
-                                                const team = availableTeamsForA.find(t => t.id_team === option.value);
-                                                return (
-                                                    <Space>
-                                                        <img 
-                                                            src={team?.flagUrl} 
-                                                            alt={team?.name} 
-                                                            style={{ width: 20, height: 15 }}
-                                                        />
-                                                        {option.label}
-                                                    </Space>
-                                                );
-                                            }}
-                                        />
-                                    </Form.Item>
-
-                                    <Form.Item
-                                        name="matchDate"
-                                        label="Fecha y hora del partido"
-                                        rules={[
-                                            { required: true, message: 'La fecha y hora son requeridas' },
-                                        ]}
-                                    >
-                                        <DateTimePicker
-                                            placeholder="Selecciona fecha y hora"
-                                        />
-                                    </Form.Item>
                                 </Col>
 
-                                {/* Segunda columna */}
+                                {/* Grupo */}
                                 <Col xs={24} md={12}>
                                     <Form.Item
                                         name="id_group"
@@ -308,7 +247,62 @@ const MatchModal_Admin = ({
                                             }))}
                                         />
                                     </Form.Item>
+                                </Col>
 
+                                {/* Equipo A */}
+                                <Col xs={24} md={12}>
+                                    <Form.Item
+                                        name="id_teamA"
+                                        label="Equipo A"
+                                        rules={[
+                                            { required: true, message: 'El equipo A es requerido' },
+                                        ]}
+                                    >
+                                        <Select
+                                            placeholder={
+                                                !selectedGroup
+                                                    ? "Primero selecciona un grupo"
+                                                    : "Selecciona el equipo A"
+                                            }
+                                            size="large"
+                                            showSearch
+                                            disabled={!selectedGroup}
+                                            loading={loadingGroupDetails}
+                                            optionFilterProp="children"
+                                            filterOption={(input, option) =>
+                                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                            }
+                                            notFoundContent={
+                                                !selectedGroup
+                                                    ? "Selecciona un grupo primero"
+                                                    : !hasTeams
+                                                        ? "No hay equipos en este grupo"
+                                                        : "No se encontraron resultados"
+                                            }
+                                            onChange={handleTeamAChange}
+                                            options={availableTeamsForA?.map((team) => ({
+                                                value: team.id_team,
+                                                label: team.name,
+                                            }))}
+                                            optionRender={(option) => {
+                                                const team = availableTeamsForA.find(t => t.id_team === option.value);
+                                                return (
+                                                    <Space>
+                                                        <img
+                                                            src={team?.flagUrl}
+                                                            alt={team?.name}
+                                                            style={{ width: 20, height: 15 }}
+                                                        />
+                                                        {option.label}
+                                                    </Space>
+                                                );
+                                            }}
+                                        />
+                                    </Form.Item>
+                                </Col>
+
+                                {/* Equipo B */}
+                                <Col xs={24} md={12}>
                                     <Form.Item
                                         name="id_teamB"
                                         label="Equipo B"
@@ -318,7 +312,7 @@ const MatchModal_Admin = ({
                                     >
                                         <Select
                                             placeholder={
-                                                !selectedGroup 
+                                                !selectedGroup
                                                     ? "Primero selecciona un grupo"
                                                     : "Selecciona el equipo B"
                                             }
@@ -331,10 +325,10 @@ const MatchModal_Admin = ({
                                                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                             }
                                             notFoundContent={
-                                                !selectedGroup 
+                                                !selectedGroup
                                                     ? "Selecciona un grupo primero"
-                                                    : !hasTeams 
-                                                        ? "No hay equipos en este grupo" 
+                                                    : !hasTeams
+                                                        ? "No hay equipos en este grupo"
                                                         : "No se encontraron resultados"
                                             }
                                             onChange={handleTeamBChange}
@@ -346,15 +340,30 @@ const MatchModal_Admin = ({
                                                 const team = availableTeamsForB.find(t => t.id_team === option.value);
                                                 return (
                                                     <Space>
-                                                        <img 
-                                                            src={team?.flagUrl} 
-                                                            alt={team?.name} 
+                                                        <img
+                                                            src={team?.flagUrl}
+                                                            alt={team?.name}
                                                             style={{ width: 20, height: 15 }}
                                                         />
                                                         {option.label}
                                                     </Space>
                                                 );
                                             }}
+                                        />
+                                    </Form.Item>
+                                </Col>
+
+                                {/* Fecha y hora */}
+                                <Col xs={24} md={12}>
+                                    <Form.Item
+                                        name="matchDate"
+                                        label="Fecha y hora del partido"
+                                        rules={[
+                                            { required: true, message: 'La fecha y hora son requeridas' },
+                                        ]}
+                                    >
+                                        <DateTimePicker
+                                            placeholder="Selecciona fecha y hora"
                                         />
                                     </Form.Item>
                                 </Col>
@@ -371,7 +380,7 @@ const MatchModal_Admin = ({
                     {/* Footer */}
                     <div className="flex items-center justify-end gap-3 p-4 border-t dark:border-zinc-700 border-gray-200">
                         <Button
-                            type="primary" 
+                            type="primary"
                             danger
                             onClick={handleCancel}
                             size="large"

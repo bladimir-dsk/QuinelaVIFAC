@@ -5,7 +5,9 @@ import Highlighter from "react-highlight-words";
 import dayjs from 'dayjs';
 import { useApi } from "../../../hooks/useApi";
 import MatchModal_Admin from "./modals/MatchModal_Admin";
+import WinnerModal_Admin from "./modals/WinnerModal_Admin";
 import { useDeleteConfirmation } from "../../../hooks/useDeleteConfirmation";
+import { Crown } from "lucide-react";
 
 export default function MatchesRegistrationScreen_Admin() {
     const [searchText, setSearchText] = useState("");
@@ -13,6 +15,7 @@ export default function MatchesRegistrationScreen_Admin() {
     const [modalState, setModalState] = useState({
         add: false,
         edit: false,
+        winner: false,
     });
     const [selectedMatch, setSelectedMatch] = useState(null);
 
@@ -131,7 +134,7 @@ export default function MatchesRegistrationScreen_Admin() {
     });
 
     const openModal = (type, match = null) => {
-        setModalState({ add: false, edit: false, [type]: true });
+        setModalState({ add: false, edit: false, winner: false, [type]: true });
         setSelectedMatch(match);
     };
 
@@ -144,6 +147,11 @@ export default function MatchesRegistrationScreen_Admin() {
         await fetchMatches();
         closeModal("add");
         closeModal("edit");
+    };
+
+    const handleSaveWinner = async () => {
+        await fetchMatches();
+        closeModal("winner");
     };
 
     const showDeleteConfirm = useDeleteConfirmation({
@@ -163,6 +171,10 @@ export default function MatchesRegistrationScreen_Admin() {
 
     const handleEdit = (record) => {
         openModal("edit", record);
+    };
+
+    const handleSetWinner = (record) => {
+        openModal("winner", record);
     };
 
     // Transformar datos para la tabla
@@ -281,6 +293,13 @@ export default function MatchesRegistrationScreen_Admin() {
             width: 120,
             render: (_, record) => (
                 <Space size="small">
+                    <Tooltip title="Asignar ganador" color="blue">
+                        <Button 
+                            type="link"
+                            icon={<Crown size={16} />}
+                            onClick={() => handleSetWinner(record)}
+                        />
+                    </Tooltip>
                     <Tooltip title="Editar" color="green">
                         <Button
                             type="link"
@@ -366,6 +385,13 @@ export default function MatchesRegistrationScreen_Admin() {
                 isEditing={true}
                 phasesData={phasesData}
                 groupsData={groupsData}
+            />
+
+            <WinnerModal_Admin
+                visible={modalState.winner}
+                onClose={() => closeModal("winner")}
+                onSave={handleSaveWinner}
+                matchData={selectedMatch}
             />
         </div>
     );

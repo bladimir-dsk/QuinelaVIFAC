@@ -19,18 +19,19 @@ html {
     width: 10px;
 }
 
+
 /* ==== MODO CLARO ==== */
 :root {
     --scroll-track: #e5e7eb;
     /* gris claro */
-    --scroll-thumb: #2b7fff;
+    --scroll-thumb: #00b8db;
 }
 
 /* ==== MODO OSCURO ==== */
 .dark {
     --scroll-track: #1f2937;
     /* gris oscuro */
-    --scroll-thumb: #2b7fff;
+    --scroll-thumb: #00b8db;
 }
 
 /* Chrome, Edge, Opera */

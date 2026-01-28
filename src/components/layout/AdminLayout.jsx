@@ -11,7 +11,6 @@ export default function AdminLayout() {
     const [isMobile, setIsMobile] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
 
-    // Detectar tamaño de pantalla
     useEffect(() => {
         const checkMobile = () => {
             setIsMobile(window.innerWidth < 1024);
@@ -32,7 +31,7 @@ export default function AdminLayout() {
     };
 
     return (
-        <Layout className="min-h-screen">
+        <Layout className="h-screen overflow-hidden">
             <AdminSidebar 
                 collapsed={collapsed} 
                 onCollapse={setCollapsed}
@@ -45,6 +44,9 @@ export default function AdminLayout() {
                 style={{
                     marginLeft: isMobile ? 0 : (collapsed ? 80 : 200),
                     transition: 'margin-left 0.2s',
+                    height: '100vh',
+                    display: 'flex',
+                    flexDirection: 'column',
                 }}
             >
                 <AdminNavbar 
@@ -54,9 +56,11 @@ export default function AdminLayout() {
                 />
                 
                 <Content
-                    className="mt-16 p-4 md:p-6 bg-gray-100 dark:bg-zinc-900"
+                    className="p-4 md:p-6 bg-gray-100 dark:bg-zinc-800"
                     style={{
-                        minHeight: 'calc(100vh - 64px)',
+                        marginTop: '64px',
+                        height: 'calc(100vh - 64px)',
+                        overflow: 'auto',
                     }}
                 >
                     <Outlet />

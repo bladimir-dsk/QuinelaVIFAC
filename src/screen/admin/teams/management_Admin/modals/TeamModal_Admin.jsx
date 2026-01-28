@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { Copy, X } from 'lucide-react';
 import { Modal, Form, Input, Button, message, Avatar } from 'antd';
 import { FlagOutlined, TeamOutlined } from '@ant-design/icons';
 import { useApi } from '../../../../../hooks/useApi';
@@ -64,6 +64,10 @@ const TeamModal_Admin = ({
         return formValues.name?.trim() &&
             formValues.flagUrl?.trim() &&
             /^https?:\/\/.+/.test(formValues.flagUrl);
+    };
+
+    const handleCopyTemplate = () => {
+        navigator.clipboard.writeText('https://flagcdn.com/w80/[código].webp');
     };
 
     const handleSubmit = async () => {
@@ -169,11 +173,20 @@ const TeamModal_Admin = ({
                                     }
                                 ]}
                                 extra={
-                                    <>
-                                        Recomendado: https://flagcdn.com/w80/[código].webp
-                                        <br />
-                                        (ej: mx.webp para México)
-                                    </>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-gray-600 dark:text-gray-400">
+                                            <div className='space-x-1 flex items-center'>
+                                                <span> Recomendado: https://flagcdn.com/w80/[código].webp</span>
+                                                <button
+                                                    type="button"
+                                                    onClick={handleCopyTemplate}>
+                                                    <Copy size={14} className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300" />
+                                                </button>
+                                            </div>
+                                            (ej: mx.webp para México)
+                                        </span>
+
+                                    </div>
                                 }
                             >
                                 <Input

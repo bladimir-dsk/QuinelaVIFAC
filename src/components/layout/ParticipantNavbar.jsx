@@ -11,7 +11,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
-export default function ParticipantNavbar({ collapsed, onToggle }) {
+export default function ParticipantNavbar({ collapsed, onToggle, isMobile }) {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -77,14 +77,15 @@ export default function ParticipantNavbar({ collapsed, onToggle }) {
             className="bg-white dark:bg-[#141414] px-4 flex items-center fixed top-0 right-0 z-40"
             style={{
                 height: '64px',
-                width: collapsed ? 'calc(100% - 80px)' : 'calc(100% - 200px)',
+                width: isMobile ? '100%' : (collapsed ? 'calc(100% - 80px)' : 'calc(100% - 200px)'),
                 transition: 'width 0.2s',
+                left: isMobile ? 0 : 'auto',
             }}>
             <button
                 onClick={onToggle}
                 className="text-gray-600 dark:text-white hover:dark:text-black transition-colors p-2 rounded-lg hover:bg-cyan-200/50 dark:hover:bg-cyan-700/30"
             >
-                {collapsed ? <MenuIcon size={20} /> : <X size={20} />}
+                {collapsed || isMobile ? <MenuIcon size={20} /> : <X size={20} />}
             </button>
 
             <div className="flex items-center ml-auto">
@@ -93,7 +94,7 @@ export default function ParticipantNavbar({ collapsed, onToggle }) {
                         onClick={() => setDropdownOpen(!dropdownOpen)}
                         className="flex items-center gap-3 cursor-pointer rounded-lg transition-colors p-2 hover:bg-cyan-200/50 dark:hover:bg-cyan-700/30"
                     >
-                        <div className="flex flex-col justify-center  text-right space-y-1">
+                        <div className="flex flex-col justify-center text-right space-y-1">
                             <span className="text-sm font-medium dark:text-white text-gray-900">
                                 {user?.name || 'Participante'}
                             </span>
@@ -116,13 +117,13 @@ export default function ParticipantNavbar({ collapsed, onToggle }) {
 
                     {/* Dropdown Menu */}
                     {dropdownOpen && (
-                        <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-1">
+                        <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#1f1f1f] rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1">
                             {userMenuItems.map((item) => {
                                 if (item.type === 'divider') {
                                     return (
                                         <div
                                             key={item.key || 'divider'}
-                                            className="border-t border-gray-200 my-1"
+                                            className="border-t border-gray-200 dark:border-gray-700 my-1"
                                         />
                                     );
                                 }
@@ -131,10 +132,11 @@ export default function ParticipantNavbar({ collapsed, onToggle }) {
                                     <button
                                         key={item.key}
                                         onClick={item.onClick}
-                                        className={`w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors ${item.danger
-                                                ? 'text-red-600 hover:bg-red-50'
-                                                : 'text-gray-700 hover:bg-gray-50'
-                                            }`}
+                                        className={`w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors ${
+                                            item.danger
+                                                ? 'text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20'
+                                                : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
+                                        }`}
                                     >
                                         {item.icon}
                                         <span>{item.label}</span>

@@ -114,3 +114,54 @@ export function useApi(endpoint, options, autoFetch = true) {
 
     return { data, loading, error, fetchData, postData, patchData, deleteData };
 }
+
+// Nuevo hook para operaciones sin refetch automático
+export function useApiMutation(endpoint, options = {}) {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const optionsRef = useRef(options);
+
+    useEffect(() => {
+        optionsRef.current = options;
+    }, [options]);
+
+    const patchData = useCallback(
+        async (body, id = null) => {
+            setLoading(true);
+            setError(null);
+            try {
+                const url = id ? `${endpoint}/${id}` : endpoint;
+                const response = await api.patch(url, body, optionsRef.current);
+                return response.data;
+            } catch (err) {
+                const errorMessage = err.response?.data?.message || err.message || "Error en PATCH";
+                setError(errorMessage);
+                throw err;
+            } finally {
+                setLoading(false);
+            }
+        },
+        [endpoint]
+    );
+
+    const postData = useCallback(
+        async (body) => {
+            setLoading(true);
+            setError(null);
+            try {
+                const response = await api.post(endpoint, body, optionsRef.current);
+                return response.data;
+            } catch (err) {
+                const errorMessage = err.response?.data?.message || err.message || "Error en POST";
+                setError(errorMessage);
+                throw err;
+            } finally {
+                setLoading(false);
+            }
+        },
+        [endpoint]
+    );
+
+    return { loading, error, patchData, postData };
+}

@@ -1,9 +1,5 @@
 import { notification } from 'antd';
 
-/**
- * Hook reutilizable para mostrar notificaciones
- * @returns {Object} - { showSuccess, showError, showWarning, showInfo }
- */
 export const useNotification = () => {
     const [api, contextHolder] = notification.useNotification();
 

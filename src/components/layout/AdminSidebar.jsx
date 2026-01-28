@@ -24,8 +24,25 @@ export default function AdminSidebar({ collapsed, onCollapse, isMobile, open, on
     const location = useLocation();
     const { logout } = useAuth();
     const { isDarkMode, toggleDarkMode } = useDarkMode();
-    const { token } = useToken(); // Obtener tokens del tema actual
+    const { token } = useToken();
 
+    // Colores estáticos para el sidebar
+    const SIDEBAR_COLORS = {
+        background: '#00b8db',
+        backgroundHover: '#00d3f2',
+        backgroundActive: '#53eafd',
+        submenuBg: '#008fb3',
+        text: '#ffffff',
+        textSecondary: '#e0e0e0',
+        border: '#0092b8',
+        error: '#e74c3c',
+        errorHover: '#c0392b',
+        menuSelected: '#007595',
+        darkModeButton: '#104e64',
+        darkModeButtonHover: '#0d3b4a',
+        lightModeButton: '#efb100',
+        lightModeButtonHover: '#c78e00',
+    };
     const menuItems = [
         {
             key: '/admin/dashboard',
@@ -109,36 +126,100 @@ export default function AdminSidebar({ collapsed, onCollapse, isMobile, open, on
         return [];
     };
 
+    // Estilos CSS en línea para sobrescribir Ant Design
+    const menuStyles = `
+        .custom-sidebar-menu.ant-menu-dark {
+            background-color: ${SIDEBAR_COLORS.background} !important;
+        }
+        .custom-sidebar-menu.ant-menu-dark .ant-menu-item {
+            background-color: ${SIDEBAR_COLORS.background} !important;
+            color: ${SIDEBAR_COLORS.text} !important;
+        }
+        .custom-sidebar-menu.ant-menu-dark .ant-menu-item:hover {
+            background-color: ${SIDEBAR_COLORS.backgroundHover} !important;
+            color: ${SIDEBAR_COLORS.text} !important;
+        }
+        .custom-sidebar-menu.ant-menu-dark .ant-menu-item-selected {
+            background-color: ${SIDEBAR_COLORS.menuSelected} !important;
+            color: ${SIDEBAR_COLORS.text} !important;
+        }
+        .custom-sidebar-menu.ant-menu-dark .ant-menu-item-selected:hover {
+            background-color: ${SIDEBAR_COLORS.menuSelected} !important;
+        }
+        .custom-sidebar-menu.ant-menu-dark .ant-menu-item-active {
+            background-color: ${SIDEBAR_COLORS.backgroundHover} !important;
+        }
+        
+        /* Títulos de submenú */
+        .custom-sidebar-menu.ant-menu-dark .ant-menu-submenu-title {
+            background-color: ${SIDEBAR_COLORS.background} !important;
+            color: ${SIDEBAR_COLORS.text} !important;
+        }
+        
+        .custom-sidebar-menu.ant-menu-dark .ant-menu-submenu-title:hover {
+            background-color: ${SIDEBAR_COLORS.backgroundHover} !important;
+            color: ${SIDEBAR_COLORS.text} !important;
+        }
+        
+        /* Submenú abierto */
+        .custom-sidebar-menu.ant-menu-dark .ant-menu-submenu-open > .ant-menu-submenu-title {
+            background-color: ${SIDEBAR_COLORS.backgroundHover} !important;
+            color: ${SIDEBAR_COLORS.text} !important;
+        }
+        
+        /* Contenedor de items del submenú */
+        .custom-sidebar-menu.ant-menu-dark .ant-menu-sub.ant-menu-inline {
+            background-color: ${SIDEBAR_COLORS.submenuBg} !important;
+        }
+        
+        /* Items dentro del submenú */
+        .custom-sidebar-menu.ant-menu-dark .ant-menu-sub .ant-menu-item {
+            background-color: transparent !important;
+            color: ${SIDEBAR_COLORS.textSecondary} !important;
+        }
+        
+        .custom-sidebar-menu.ant-menu-dark .ant-menu-sub .ant-menu-item:hover {
+            background-color: ${SIDEBAR_COLORS.backgroundActive} !important;
+            color: ${SIDEBAR_COLORS.text} !important;
+        }
+        
+        .custom-sidebar-menu.ant-menu-dark .ant-menu-sub .ant-menu-item-selected {
+            background-color: ${SIDEBAR_COLORS.menuSelected} !important;
+            color: ${SIDEBAR_COLORS.text} !important;
+        }
+        
+        /* Flecha del submenú */
+        .custom-sidebar-menu.ant-menu-dark .ant-menu-submenu-arrow {
+            color: ${SIDEBAR_COLORS.text} !important;
+        }
+    `;
+
     const sidebarContent = (
         <div
             className="flex flex-col h-full"
             style={{
-                backgroundColor: token.colorBgContainer,
-                color: token.colorText
+                backgroundColor: SIDEBAR_COLORS.background,
+                color: SIDEBAR_COLORS.text
             }}
         >
+            <style>{menuStyles}</style>
+
             {/* Header del Sidebar */}
             <div
                 className="h-16 flex items-center justify-center"
                 style={{
-                    borderBottom: `1px solid ${token.colorBorderSecondary}`,
-                    backgroundColor: token.colorBgContainer
+                    borderBottom: `1px solid ${SIDEBAR_COLORS.border}`,
+                    backgroundColor: SIDEBAR_COLORS.background
                 }}
             >
                 {(!collapsed || isMobile) ? (
                     <div className="flex items-center space-x-2">
                         <img src="/Logo-vifac.webp" alt="VIFAC" className="w-10 h-10" />
                         <div>
-                            <h1
-                                className="text-base font-bold leading-none mb-0"
-                                style={{ color: token.colorText }}
-                            >
+                            <h1 className="text-base font-bold leading-none mb-0 text-white">
                                 VIFAC
                             </h1>
-                            <h1
-                                className="text-xs leading-none mt-0"
-                                style={{ color: token.colorTextSecondary }}
-                            >
+                            <h1 className="text-xs leading-none mt-0 text-gray-700">
                                 Mundial 2026
                             </h1>
                         </div>
@@ -149,16 +230,18 @@ export default function AdminSidebar({ collapsed, onCollapse, isMobile, open, on
             </div>
 
             {/* Menu */}
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto" style={{ backgroundColor: SIDEBAR_COLORS.background }}>
                 <Menu
                     mode="inline"
                     selectedKeys={getSelectedKey()}
                     defaultOpenKeys={getOpenKeys()}
                     items={menuItems}
                     onClick={handleMenuClick}
+                    theme="dark"
+                    className="custom-sidebar-menu"
                     style={{
                         border: 0,
-                        backgroundColor: token.colorBgContainer
+                        backgroundColor: SIDEBAR_COLORS.background,
                     }}
                 />
             </div>
@@ -167,8 +250,8 @@ export default function AdminSidebar({ collapsed, onCollapse, isMobile, open, on
             <div
                 className="p-2 space-y-2"
                 style={{
-                    borderTop: `1px solid ${token.colorBorderSecondary}`,
-                    backgroundColor: token.colorBgContainer
+                    borderTop: `1px solid ${SIDEBAR_COLORS.border}`,
+                    backgroundColor: SIDEBAR_COLORS.background
                 }}
             >
                 <div>
@@ -176,14 +259,20 @@ export default function AdminSidebar({ collapsed, onCollapse, isMobile, open, on
                         onClick={toggleDarkMode}
                         className="w-full flex items-center justify-center space-x-2 py-3 rounded-lg transition-colors"
                         style={{
-                            backgroundColor: token.colorBgTextHover,
-                            color: token.colorText
+                            backgroundColor: isDarkMode
+                                ? SIDEBAR_COLORS.lightModeButton
+                                : SIDEBAR_COLORS.darkModeButton,
+                            color: SIDEBAR_COLORS.text,
                         }}
                         onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = token.colorBgTextActive;
+                            e.currentTarget.style.backgroundColor = isDarkMode
+                                ? SIDEBAR_COLORS.lightModeButtonHover
+                                : SIDEBAR_COLORS.darkModeButtonHover;
                         }}
                         onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = token.colorBgTextHover;
+                            e.currentTarget.style.backgroundColor = isDarkMode
+                                ? SIDEBAR_COLORS.lightModeButton
+                                : SIDEBAR_COLORS.darkModeButton;
                         }}
                     >
                         {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
@@ -192,13 +281,14 @@ export default function AdminSidebar({ collapsed, onCollapse, isMobile, open, on
                         )}
                     </button>
                 </div>
+
                 <div>
                     <button
                         onClick={handleLogout}
                         className="w-full flex items-center justify-center space-x-2 py-3 rounded-lg text-white transition-colors"
-                        style={{ backgroundColor: token.colorError }}
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = token.colorErrorHover}
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = token.colorError}
+                        style={{ backgroundColor: SIDEBAR_COLORS.error }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = SIDEBAR_COLORS.errorHover}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = SIDEBAR_COLORS.error}
                     >
                         <LogOut size={18} />
                         {(!collapsed || isMobile) && <span className="text-sm">Cerrar sesión</span>}
@@ -208,6 +298,7 @@ export default function AdminSidebar({ collapsed, onCollapse, isMobile, open, on
         </div>
     );
 
+    // Renderizar Drawer en móvil
     if (isMobile) {
         return (
             <Drawer
@@ -219,7 +310,7 @@ export default function AdminSidebar({ collapsed, onCollapse, isMobile, open, on
                 styles={{
                     body: {
                         padding: 0,
-                        backgroundColor: token.colorBgContainer
+                        backgroundColor: SIDEBAR_COLORS.background
                     },
                     header: { display: 'none' }
                 }}
@@ -229,6 +320,7 @@ export default function AdminSidebar({ collapsed, onCollapse, isMobile, open, on
         );
     }
 
+    // Renderizar Sider en desktop
     return (
         <Sider
             collapsible
@@ -238,7 +330,7 @@ export default function AdminSidebar({ collapsed, onCollapse, isMobile, open, on
             width={200}
             trigger={null}
             collapsedWidth={80}
-            theme={isDarkMode ? 'dark' : 'light'}
+            theme="dark"
             style={{
                 overflow: 'auto',
                 height: '100vh',
@@ -246,7 +338,7 @@ export default function AdminSidebar({ collapsed, onCollapse, isMobile, open, on
                 left: 0,
                 top: 0,
                 bottom: 0,
-                backgroundColor: token.colorBgContainer
+                backgroundColor: SIDEBAR_COLORS.background
             }}
         >
             {sidebarContent}
