@@ -1,4 +1,6 @@
 import React from "react";
+import PrivacyModal from "../modals/PrivacyModal";
+import RegulationModal from "../modals/RegulationModal";
 
 export default function AppFooter() {
   return (
@@ -17,13 +19,15 @@ export default function AppFooter() {
               </div>
               <div>
                 <h3 className="font-black text-2xl leading-none">VIFAC</h3>
-                <p className="text-emerald-400 text-sm font-medium leading-none">Mundial 2026</p>
+                <p className="text-emerald-400 text-sm font-medium leading-none">
+                  Mundial 2026
+                </p>
               </div>
             </div>
             <p className="text-gray-300 leading-relaxed mb-4">
-              Institución sin fines de lucro dedicada al cuidado de la salud y bienestar
-              de las mujeres embarazadas, brindándoles servicios gratuitos de acompañamiento
-              y superación personal.
+              Institución sin fines de lucro dedicada al cuidado de la salud y
+              bienestar de las mujeres embarazadas, brindándoles servicios
+              gratuitos de acompañamiento y superación personal.
             </p>
             <p className="text-emerald-400 font-semibold">
               Más de 40 años transformando vidas
@@ -49,7 +53,9 @@ export default function AppFooter() {
 
           {/* Contacto */}
           <div>
-            <h4 className="font-bold text-lg mb-4 text-emerald-400">Contacto</h4>
+            <h4 className="font-bold text-lg mb-4 text-emerald-400">
+              Contacto
+            </h4>
             <ul className="space-y-3 text-gray-300">
               <li className="flex items-center gap-2">
                 <span>📧</span>
@@ -74,15 +80,9 @@ export default function AppFooter() {
               © 2026 VIFAC. Todos los derechos reservados.
             </p>
             <div className="flex gap-6">
-              <a href="#" className="text-gray-400 hover:text-emerald-400 transition-colors">
-                Privacidad
-              </a>
-              <a href="#" className="text-gray-400 hover:text-emerald-400 transition-colors">
-                Términos
-              </a>
-              <a href="#" className="text-gray-400 hover:text-emerald-400 transition-colors">
-                Reglamento
-              </a>
+              <PrivacyModal />
+
+              <RegulationModal />
             </div>
           </div>
         </div>
