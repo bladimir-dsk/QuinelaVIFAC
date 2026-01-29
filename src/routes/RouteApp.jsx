@@ -1,15 +1,18 @@
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import {
     AdminDashboard,
     AdminManagementTeamScreen_Admin,
     AdminMatchesRegistrationScreen_Admin,
     AdminPhasesRegistrationScreen,
+    AdminRankingsScreen_Admin,
     AdminTeamGroupsScreen_Admin,
     LandingPage,
     Login,
+    MyProfileSCreen_Participant,
     ParticipantHomeScreen,
-    PredictionsScreen_Participant
+    PredictionsScreen_Participant,
+    RankingsScreen_Participant
 } from './lazyComponents'
 import { ProtectedRoute } from './ProtectedRoute'
 import ParticipantLayout from '../components/layout/ParticipantLayout'
@@ -32,6 +35,7 @@ export default function RouteApp() {
                     <Route path='fases' element={<AdminPhasesRegistrationScreen />} />
                     <Route path='equipos/grupos' element={<AdminTeamGroupsScreen_Admin />} />
                     <Route path='partidos' element={<AdminMatchesRegistrationScreen_Admin />} />
+                    <Route path='rankings' element={<AdminRankingsScreen_Admin />} />
                 </Route>
 
                 {/* Participante */}
@@ -42,6 +46,8 @@ export default function RouteApp() {
                     <Route index element={<Navigate to="/participante/home" replace />} />
                     <Route path='home' element={<ParticipantHomeScreen />} />
                     <Route path='predicciones' element={<PredictionsScreen_Participant />} />
+                    <Route path='mi-perfil' element={<MyProfileSCreen_Participant />} />
+                    <Route path='rankings' element={<RankingsScreen_Participant />} />
                 </Route>
 
                 <Route path='*' element={<Navigate to="/" replace />} />

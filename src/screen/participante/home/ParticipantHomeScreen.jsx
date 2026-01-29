@@ -8,7 +8,7 @@ import { Modal, Button, Select, message } from 'antd';
 export default function ParticipanteHomeScreen() {
     const { user } = useAuth();
     const { data: predictions, loading, fetchData, patchData, deleteData } = useApi('/user-prediction');
-    
+
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [selectedPrediction, setSelectedPrediction] = useState(null);
     const [newTeamId, setNewTeamId] = useState(null);
@@ -148,16 +148,16 @@ export default function ParticipanteHomeScreen() {
                             {predictions.map((prediction) => (
                                 <div
                                     key={prediction.id_userPrediction}
-                                    className="border-2 border-gray-200 dark:border-gray-700 rounded-xl p-5 hover:border-cyan-300 dark:hover:border-cyan-700 transition-all hover:shadow-lg"
+                                    className="border-2 border-gray-200 dark:border-gray-700 rounded-xl p-4 sm:p-5 hover:border-cyan-300 dark:hover:border-cyan-700 transition-all hover:shadow-lg"
                                 >
-                                    {/* Header: Fase y Grupo */}
-                                    <div className="flex items-center justify-between mb-4">
-                                        <div className="flex items-center gap-2">
-                                            <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {/* Header: Fase, Grupo y Status */}
+                                    <div className="flex items-center justify-between gap-3 mb-4">
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
                                                 {prediction.match.phase.name}
                                             </span>
                                             {prediction.match.group && (
-                                                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300">
+                                                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
                                                     {prediction.match.group.name}
                                                 </span>
                                             )}
@@ -166,98 +166,99 @@ export default function ParticipanteHomeScreen() {
                                         {/* Status badge */}
                                         {prediction.match.isFinished ? (
                                             <span
-                                                className={`px-4 py-1.5 rounded-full text-sm font-semibold flex items-center gap-2 ${
-                                                    prediction.isCorrect
+                                                className={`px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-2 whitespace-nowrap ${prediction.isCorrect
                                                         ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
                                                         : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
-                                                }`}
+                                                    }`}
                                             >
                                                 {prediction.isCorrect ? (
                                                     <>
                                                         <CheckCircle className="w-4 h-4" />
-                                                        ¡Acertaste!
+                                                        <span className="hidden xs:inline">¡Acertaste!</span>
+                                                        <span className="xs:hidden">Correcto</span>
                                                     </>
                                                 ) : (
                                                     <>
                                                         <XCircle className="w-4 h-4" />
-                                                        No acertaste
+                                                        <span className="hidden xs:inline">No acertaste</span>
+                                                        <span className="xs:hidden">Incorrecto</span>
                                                     </>
                                                 )}
                                             </span>
                                         ) : (
-                                            <span className="px-4 py-1.5 rounded-full text-sm font-semibold flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
+                                            <span className="px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 whitespace-nowrap">
                                                 <Clock className="w-4 h-4" />
                                                 Pendiente
                                             </span>
                                         )}
                                     </div>
 
-                                    {/* Partido */}
-                                    <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-4 mb-4">
-                                        <div className="flex items-center justify-between gap-4">
+                                    {/* Partido - Centrado en móvil */}
+                                    <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-3 sm:p-4 mb-4">
+                                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
                                             {/* Team A */}
-                                            <div className="flex-1 flex items-center gap-3">
+                                            <div className="flex items-center justify-center sm:justify-start gap-2 sm:gap-3 flex-1">
                                                 <img
                                                     src={prediction.match.teamA.flagUrl}
                                                     alt={prediction.match.teamA.name}
-                                                    className="w-12 h-9 object-cover rounded shadow-sm"
+                                                    className="w-10 h-8 sm:w-12 sm:h-9 object-cover rounded shadow-sm shrink-0"
                                                 />
-                                                <span className="font-semibold text-lg text-gray-900 dark:text-gray-100">
+                                                <span className="font-semibold text-sm sm:text-lg text-gray-900 dark:text-gray-100">
                                                     {prediction.match.teamA.name}
                                                 </span>
                                             </div>
 
                                             {/* VS */}
-                                            <div className="px-4 py-2 bg-white dark:bg-gray-800 rounded-lg">
-                                                <span className="text-gray-500 dark:text-gray-400 font-bold text-sm">
+                                            <div className="px-3 py-1 sm:px-4 sm:py-2 bg-white dark:bg-gray-800 rounded-lg self-center">
+                                                <span className="text-gray-500 dark:text-gray-400 font-bold text-xs sm:text-sm">
                                                     VS
                                                 </span>
                                             </div>
 
                                             {/* Team B */}
-                                            <div className="flex-1 flex items-center gap-3 justify-end">
-                                                <span className="font-semibold text-lg text-gray-900 dark:text-gray-100">
-                                                    {prediction.match.teamB.name}
-                                                </span>
+                                            <div className="flex items-center justify-center sm:justify-end gap-2 sm:gap-3 flex-1">
                                                 <img
                                                     src={prediction.match.teamB.flagUrl}
                                                     alt={prediction.match.teamB.name}
-                                                    className="w-12 h-9 object-cover rounded shadow-sm"
+                                                    className="w-10 h-8 sm:w-12 sm:h-9 object-cover rounded shadow-sm shrink-0 sm:order-2"
                                                 />
+                                                <span className="font-semibold text-sm sm:text-lg text-gray-900 dark:text-gray-100 sm:order-1">
+                                                    {prediction.match.teamB.name}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
 
-                                    {/* Tu predicción */}
-                                    <div className="flex items-center justify-between mb-4">
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                                    {/* Tu predicción y puntos - En una línea en móvil */}
+                                    <div className="flex items-center justify-between gap-3 mb-4">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                            <span className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">
                                                 Tu predicción:
                                             </span>
-                                            <div className="flex items-center gap-2 bg-cyan-500 dark:bg-cyan-600 px-4 py-2 rounded-lg shadow-sm">
+                                            <div className="flex items-center gap-2 bg-cyan-500 dark:bg-cyan-600 px-3 py-2 rounded-lg shadow-sm w-fit">
                                                 <img
                                                     src={prediction.selectedTeam.flagUrl}
                                                     alt={prediction.selectedTeam.name}
-                                                    className="w-6 h-5 object-cover rounded"
+                                                    className="w-6 h-5 object-cover rounded shrink-0"
                                                 />
-                                                <span className="font-bold text-white">
+                                                <span className="font-bold text-white text-sm sm:text-base">
                                                     {prediction.selectedTeam.name}
                                                 </span>
                                             </div>
                                         </div>
 
-                                        <div className="flex items-center gap-2">
-                                            <Trophy className="w-5 h-5 text-yellow-500" />
-                                            <span className="text-lg font-bold text-gray-900 dark:text-gray-100">
-                                                {prediction.points} puntos
+                                        <div className="flex items-center gap-2 shrink-0">
+                                            <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500" />
+                                            <span className="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap">
+                                                {prediction.points} pts
                                             </span>
                                         </div>
                                     </div>
 
                                     {/* Footer: Fecha y acciones */}
-                                    <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
-                                        <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                                            <Calendar className="w-4 h-4" />
+                                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+                                        <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                                            <Calendar className="w-4 h-4 shrink-0" />
                                             <span>{formatDate(prediction.match.matchDate)}</span>
                                         </div>
 
@@ -267,13 +268,15 @@ export default function ParticipanteHomeScreen() {
                                                     icon={<Pencil className="w-4 h-4" />}
                                                     onClick={() => handleEditClick(prediction)}
                                                     className="flex items-center gap-2"
+                                                    size="small"
                                                 >
-                                                    Editar
+                                                    <span className="hidden sm:inline">Editar</span>
                                                 </Button>
                                                 <Button
                                                     icon={<Trash2 className="w-4 h-4" />}
                                                     onClick={() => handleDeletePrediction(prediction)}
                                                     danger
+                                                    size="small"
                                                 />
                                             </div>
                                         )}

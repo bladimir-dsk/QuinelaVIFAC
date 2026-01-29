@@ -9,8 +9,9 @@ export default function PredictionsScreen_Participant() {
     loading,
     fetchData: refetchMatches,
   } = useApi("/matches/available-for-voting");
-  const { data: userPredictions, fetchData: refetchPredictions } =
-    useApi("/user-prediction");
+
+  const { data: userPredictions, fetchData: refetchPredictions } = useApi("/user-prediction");
+
   const {
     postData,
     patchData,

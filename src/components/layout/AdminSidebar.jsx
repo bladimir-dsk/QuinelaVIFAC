@@ -75,19 +75,9 @@ export default function AdminSidebar({ collapsed, onCollapse, isMobile, open, on
             label: 'Partidos',
         },
         {
-            key: 'ranking',
+            key: '/admin/rankings',
             icon: <TrendingUp size={18} />,
             label: 'Ranking',
-            children: [
-                {
-                    key: '#',
-                    label: 'Ranking general',
-                },
-                {
-                    key: '#',
-                    label: 'Por equipos',
-                },
-            ],
         },
     ];
 

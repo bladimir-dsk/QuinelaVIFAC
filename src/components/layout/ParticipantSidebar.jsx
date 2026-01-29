@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Layout, Menu, Drawer, theme as antdTheme } from 'antd';
 import {
     LayoutDashboard,
@@ -49,10 +49,15 @@ export default function ParticipantSidebar({ collapsed, onCollapse, isMobile, op
             label: 'Predicciones',
         },
         {
-            key: '#',
+            key: '/participante/rankings',
             icon: <Trophy size={18} />,
             label: 'Ranking',
         },
+        {
+            key: '/participante/mi-perfil',
+            icon: <User size={18} />,
+            label: 'Mi perfil'
+        }
     ];
 
     const handleMenuClick = ({ key }) => {
