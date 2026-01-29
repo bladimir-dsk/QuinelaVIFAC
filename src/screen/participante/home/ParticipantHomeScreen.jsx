@@ -3,11 +3,13 @@ import { useAuth } from '../../../hooks/useAuth';
 import { useApi } from '../../../hooks/useApi';
 import { useDeleteConfirmation } from '../../../hooks/useDeleteConfirmation';
 import { Pencil, Trash2, Trophy, Calendar, Users, CheckCircle, XCircle, Clock } from 'lucide-react';
-import { Modal, Button, Select, message } from 'antd';
+import { Modal, Button, Select, App } from 'antd';
 
 export default function ParticipanteHomeScreen() {
     const { user } = useAuth();
     const { data: predictions, loading, fetchData, patchData, deleteData } = useApi('/user-prediction');
+
+    const { message } = App.useApp();
 
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [selectedPrediction, setSelectedPrediction] = useState(null);
@@ -167,8 +169,8 @@ export default function ParticipanteHomeScreen() {
                                         {prediction.match.isFinished ? (
                                             <span
                                                 className={`px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-2 whitespace-nowrap ${prediction.isCorrect
-                                                        ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
-                                                        : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
+                                                    ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
+                                                    : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
                                                     }`}
                                             >
                                                 {prediction.isCorrect ? (

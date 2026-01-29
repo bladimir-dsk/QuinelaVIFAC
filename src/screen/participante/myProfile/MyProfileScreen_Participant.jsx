@@ -134,21 +134,6 @@ export default function MyProfileScreen_Participant() {
                             />
                         </div>
 
-                        {/* Email (disabled) */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-400  mb-2">
-                                Correo de acceso
-                            </label>
-                            <Input
-                                value={profile?.email}
-                                disabled
-                                prefix={<MailOutlined className="text-gray-400" />}
-                                size="large"
-                                className="bg-gray-50"
-                            />
-                            <p className="text-xs text-gray-500 mt-1">* El email no se puede modificar</p>
-                        </div>
-
                         {/* Apellidos */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
@@ -178,6 +163,21 @@ export default function MyProfileScreen_Participant() {
                                     placeholder="Segundo apellido"
                                 />
                             </div>
+                        </div>
+
+                        {/* Email (disabled) */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-400  mb-2">
+                                Correo de acceso
+                            </label>
+                            <Input
+                                value={profile?.email}
+                                disabled
+                                prefix={<MailOutlined className="text-gray-400" />}
+                                size="large"
+                                className="bg-gray-50"
+                            />
+                            <p className="text-xs text-gray-500 mt-1">* El correo de acceso no se puede modificar</p>
                         </div>
 
                         {/* Teléfono */}

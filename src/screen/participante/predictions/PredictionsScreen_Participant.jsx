@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Progress, message } from "antd";
+import { Progress, App } from "antd";
 import { CheckCircle, Calendar } from "lucide-react";
 import { useApi } from "../../../hooks/useApi";
 
@@ -9,6 +9,8 @@ export default function PredictionsScreen_Participant() {
     loading,
     fetchData: refetchMatches,
   } = useApi("/matches/available-for-voting");
+
+  const { message } = App.useApp();
 
   const { data: userPredictions, fetchData: refetchPredictions } = useApi("/user-prediction");
 
