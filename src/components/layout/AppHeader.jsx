@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function AppHeader() {
@@ -39,7 +39,7 @@ export default function AppHeader() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white shadow-lg" : "bg-emerald-600 shadow-md"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white shadow-lg" : "bg-blue-500 shadow-md"
           }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,23 +49,14 @@ export default function AppHeader() {
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               <div className="relative">
-                <div className="w-12 h-12 rounded-xl overflow-hidden transition-all duration-300">
+                <div className="w-full h-12 rounded-xl overflow-hidden transition-all duration-300">
                   <img
-                    src="/Logo-vifac.webp"
+                  loading="lazy"
+                    src="/Logo.webp"
                     alt="VIFAC Logo"
                     className="w-full h-full object-cover"
                   />
                 </div>
-              </div>
-              <div className="flex flex-col gap-0">
-                <span className={`font-black text-xl leading-none transition-colors ${scrolled ? "text-gray-900" : "text-white"
-                  }`}>
-                  VIFAC
-                </span>
-                <span className={`text-xs font-semibold leading-none transition-colors ${scrolled ? "text-blue-700" : "text-white"
-                  }`}>
-                  Mundial 2026
-                </span>
               </div>
             </div>
             {/* Navigation Desktop */}
@@ -73,20 +64,32 @@ export default function AppHeader() {
               {menuItems.map((item) => (
                 <button
                   key={item.key}
-                  style={{ color: scrolled ? '#008236' : 'white' }}
+                  style={{ color: scrolled ? '#2b7fff' : 'white' }}
                   onClick={() => scrollToSection(item.key)}
-                  className="font-semibold text-sm px-5 py-2.5 rounded-lg transition-all duration-200"
+                  className="
+        font-semibold 
+        text-sm 
+        px-5 
+        py-2.5 
+        rounded-lg 
+        cursor-pointer 
+        transition-all 
+        duration-200
+        hover:bg-white/20
+        hover:scale-105
+      "
                 >
                   {item.label}
                 </button>
               ))}
             </nav>
 
+
             <Link to='/login'>
               <div
                 className={`hidden md:flex items-center gap-2 font-bold px-6 py-2.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ${scrolled
-                  ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                  : "bg-white text-emerald-600 hover:bg-gray-50"
+                  ? "bg-blue-600 text-white hover:bg-blue-700"
+                  : "bg-white text-blue-500 hover:bg-gray-50"
                   }`}
               >
                 <span>Iniciar Sesión</span>
@@ -147,7 +150,7 @@ export default function AppHeader() {
               <button
                 key={item.key}
                 onClick={() => scrollToSection(item.key)}
-                className={`w-full text-center font-semibold text-gray-700 px-4 py-3 rounded-lg hover:bg-green-100 hover:text-emerald-600 transition-all ${index !== menuItems.length - 1 ? "mb-1" : ""
+                className={`w-full text-center font-semibold text-gray-700 px-4 py-3 rounded-lg hover:bg-blue-100 hover:text-blue-500! transition-all ${index !== menuItems.length - 1 ? "mb-1" : ""
                   }`}>
                 {item.label}
               </button>
@@ -157,7 +160,7 @@ export default function AppHeader() {
 
             <Link
               to='/login'
-              style={{ backgroundColor: '#10b981', color: 'white' }}
+              style={{ backgroundColor: '#2b7fff', color: 'white' }}
               className="w-full flex items-center justify-center gap-2 font-bold px-6 py-3 rounded-lg shadow-md hover:bg-emerald-700 hover:shadow-lg transition-all"
               onClick={() => setMobileMenuOpen(false)}>
               <span>Iniciar Sesión</span>

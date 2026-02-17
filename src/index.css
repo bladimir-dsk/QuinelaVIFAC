@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 * {
-    font-family: 'Outfit', sans-serif !important;
+    font-family: 'Outfit', sans-serif;
 }
 
 body,
@@ -14,6 +14,17 @@ html {
 @custom-variant dark (&:where(.dark, .dark *));
 
 
+@font-face {
+    font-family: Nura Extra Bold;
+    src: url('./assets/fonts/Nura-Extra-Bold.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.font-titulo {
+  font-family: 'Nura Extra Bold', sans-serif;
+}
+
 /* Scrollbar base */
 *::-webkit-scrollbar {
     width: 10px;
@@ -24,14 +35,14 @@ html {
 :root {
     --scroll-track: #e5e7eb;
     /* gris claro */
-    --scroll-thumb: #00b8db;
+    --scroll-thumb: #2b7fff;
 }
 
 /* ==== MODO OSCURO ==== */
 .dark {
     --scroll-track: #1f2937;
     /* gris oscuro */
-    --scroll-thumb: #00b8db;
+    --scroll-thumb: #2b7fff;
 }
 
 /* Chrome, Edge, Opera */

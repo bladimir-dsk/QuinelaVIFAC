@@ -7,11 +7,17 @@ import Hero from "../../components/sections/Hero";
 import Section from "../../components/sections/Section";
 import Resultados from "../../components/sections/Resultados";
 import Sponsors from "../../components/sections/Sponsors";
+import PremiosSection from "../../components/sections/PremiosSection";
+import ConvocatoriaSection from "../../components/sections/ConvocatoriaSection";
+import InfoModal from "../../components/modals/InfoModal";
+import RegulationModal from "../../components/modals/RegulationModal";
 
 const { Content } = Layout;
 
 export default function LandingPage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [regulationOpen, setRegulationOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,10 +36,11 @@ export default function LandingPage() {
   };
 
   return (
-    <Layout className="bg-gradient-to-br from-emerald-50 via-white to-sky-50">
+    <Layout className="bg-linear-to-br from-emerald-50 via-white to-sky-50">
       <AppHeader />
       <Content className="pt-16">
-        <Hero />
+        {/* Hero recibe la función para abrir el modal de Info */}
+        <Hero showBackgroundImage={true} onOpenInfo={() => setInfoOpen(true)} />
 
         {/* VIFAC Section */}
         <Section id="vifac" title="¿Qué es VIFAC?">
@@ -46,7 +53,7 @@ export default function LandingPage() {
                 <p className="text-lg md:text-xl text-gray-700 leading-relaxed text-center mb-6">
                   Somos una institución sin fines de lucro cuyo objetivo es el
                   cuidado de la salud y bienestar de las{" "}
-                  <span className="font-bold text-emerald-600">
+                  <span className="font-bold text-blue-500">
                     mujeres embarazadas
                   </span>
                   , brindándoles servicios gratuitos de acompañamiento y
@@ -54,7 +61,7 @@ export default function LandingPage() {
                 </p>
                 <p className="text-base text-gray-600 text-center">
                   Más de{" "}
-                  <span className="font-bold text-emerald-600">40 años</span>{" "}
+                  <span className="font-bold text-blue-500">40 años</span>{" "}
                   apoyando a mujeres en situación vulnerable en su camino hacia
                   la maternidad.
                 </p>
@@ -63,253 +70,13 @@ export default function LandingPage() {
           </div>
         </Section>
 
-         {/* Convocatoria Section */}
+        {/* Convocatoria Section */}
         <Section id="convocatoria" title="¿Cómo Participar?">
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              {
-                step: 1,
-                title: "Adquiere tu Boleto",
-                description:
-                  "Compra tu cupón con usuario y contraseña para participar. Tu compra apoya directamente a VIFAC.",
-                icon: "🎫",
-                gradient: "from-emerald-500 via-emerald-600 to-teal-600",
-                shadow: "shadow-emerald-500/30",
-              },
-              {
-                step: 2,
-                title: "Regístrate",
-                description:
-                  "Usa tus credenciales para registrarte en la plataforma y activar tu participación.",
-                icon: "📝",
-                gradient: "from-sky-500 via-sky-600 to-blue-600",
-                shadow: "shadow-sky-500/30",
-              },
-              {
-                step: 3,
-                title: "Participa y Gana",
-                description:
-                  "Sigue los partidos del Mundial 2026 y compite por increíbles premios mientras apoyas una gran causa.",
-                icon: "⚽",
-                gradient: "from-amber-500 via-amber-600 to-orange-600",
-                shadow: "shadow-amber-500/30",
-              },
-            ].map((item, index) => (
-              <div key={item.step} className="group relative" style={{ animationDelay: `${index * 100}ms` }}>
-                {/* Glow effect on hover */}
-                <div className={`absolute -inset-1 bg-gradient-to-r ${item.gradient} rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-all duration-500`}></div>
-
-                <div className="relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border border-gray-100 overflow-hidden h-full">
-                  {/* Step number badge */}
-                  <div className={`absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br ${item.gradient} rounded-full flex items-center justify-center text-white font-black text-3xl ${item.shadow} shadow-2xl group-hover:scale-110 transition-transform duration-300`}>
-                    {item.step}
-                  </div>
-
-                  {/* Decorative corner */}
-                  <div className={`absolute top-0 left-0 w-20 h-20 bg-gradient-to-br ${item.gradient} opacity-5 rounded-br-full`}></div>
-
-                  {/* Icon */}
-                  <div className="text-6xl mb-6 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                    {item.icon}
-                  </div>
-
-                  {/* Content */}
-                  <h4 className="font-black text-2xl mb-4 text-gray-800 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-gray-800 group-hover:to-gray-600 transition-all">
-                    {item.title}
-                  </h4>
-
-                  <p className="text-gray-600 leading-relaxed text-base">
-                    {item.description}
-                  </p>
-
-                  {/* Bottom accent */}
-                  <div className={`absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r ${item.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 rounded-b-3xl`}></div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ConvocatoriaSection />
         </Section>
 
-
-        {/* Premios Section */}
         <Section id="premios" title="Premios Increíbles">
-          <div className="max-w-7xl mx-auto space-y-8">
-            {/* Primer Lugar */}
-            <div className="group relative overflow-hidden rounded-3xl">
-              {/* Animated gradient border */}
-              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 p-[2px] rounded-3xl">
-                <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
-              </div>
-
-              <div className="relative bg-white rounded-3xl p-8 md:p-12 m-[2px]">
-                <div className="flex flex-col md:flex-row items-center gap-8">
-                  {/* Medal */}
-                  <div className="flex-shrink-0 relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full blur-2xl opacity-50 animate-pulse"></div>
-                    <div className="relative w-32 h-32 bg-gradient-to-br from-yellow-400 via-amber-500 to-orange-500 rounded-full flex items-center justify-center shadow-2xl transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                      <span className="text-5xl font-black text-white">1°</span>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 text-center md:text-left space-y-4">
-                    <h4 className="text-3xl md:text-4xl font-black text-gray-800 flex items-center justify-center md:justify-start gap-3">
-                      <span className="text-4xl">🏆</span>
-                      <span>Champions League o Fórmula 1</span>
-                    </h4>
-
-                    <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                      {["2 boletos de avión", "3 noches de hotel", "2 entradas al evento"].map((item, i) => (
-                        <span key={i} className="px-4 py-2 bg-gradient-to-r from-yellow-50 to-amber-50 border border-amber-200 rounded-full text-sm font-semibold text-amber-800">
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="pt-2">
-                      <span className="text-gray-600 font-medium">o efectivo </span>
-                      <span className="text-3xl font-black bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
-                        $85,000 MXN
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Segundo Lugar */}
-            <div className="group relative overflow-hidden rounded-3xl">
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-300 via-gray-400 to-zinc-400 p-[2px] rounded-3xl">
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-300 via-gray-400 to-zinc-400 blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
-              </div>
-
-              <div className="relative bg-white rounded-3xl p-8 md:p-12 m-[2px]">
-                <div className="flex flex-col md:flex-row items-center gap-8">
-                  <div className="flex-shrink-0 relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-slate-400 to-zinc-500 rounded-full blur-2xl opacity-50 animate-pulse"></div>
-                    <div className="relative w-32 h-32 bg-gradient-to-br from-slate-400 via-gray-400 to-zinc-500 rounded-full flex items-center justify-center shadow-2xl transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                      <span className="text-5xl font-black text-white">2°</span>
-                    </div>
-                  </div>
-
-                  <div className="flex-1 text-center md:text-left space-y-4">
-                    <h4 className="text-3xl md:text-4xl font-black text-gray-800 flex items-center justify-center md:justify-start gap-3">
-                      <span className="text-4xl">🎾</span>
-                      <span>US Open de Tenis</span>
-                    </h4>
-
-                    <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                      {["Vuelos Mérida-NY", "3 noches de hotel", "2 boletos US Open"].map((item, i) => (
-                        <span key={i} className="px-4 py-2 bg-gradient-to-r from-slate-50 to-gray-50 border border-gray-200 rounded-full text-sm font-semibold text-gray-700">
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="pt-2">
-                      <span className="text-gray-600 font-medium">o efectivo </span>
-                      <span className="text-3xl font-black bg-gradient-to-r from-slate-600 to-zinc-600 bg-clip-text text-transparent">
-                        $50,000 MXN
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Tercer Lugar */}
-            <div className="group relative overflow-hidden rounded-3xl">
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-600 via-orange-600 to-red-500 p-[2px] rounded-3xl">
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-600 via-orange-600 to-red-500 blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
-              </div>
-
-              <div className="relative bg-white rounded-3xl p-8 md:p-12 m-[2px]">
-                <div className="flex flex-col md:flex-row items-center gap-8">
-                  <div className="flex-shrink-0 relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-600 to-orange-700 rounded-full blur-2xl opacity-50 animate-pulse"></div>
-                    <div className="relative w-32 h-32 bg-gradient-to-br from-amber-600 via-orange-600 to-red-600 rounded-full flex items-center justify-center shadow-2xl transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                      <span className="text-5xl font-black text-white">3°</span>
-                    </div>
-                  </div>
-
-                  <div className="flex-1 text-center md:text-left space-y-4">
-                    <h4 className="text-3xl md:text-4xl font-black text-gray-800 flex items-center justify-center md:justify-start gap-3">
-                      <span className="text-4xl">⛳</span>
-                      <span>Golf en Los Cabos</span>
-                    </h4>
-
-                    <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                      {["Vuelos redondos", "3 noches de hotel", "2 Green Fees"].map((item, i) => (
-                        <span key={i} className="px-4 py-2 bg-gradient-to-r from-amber-50 to-orange-50 border border-orange-200 rounded-full text-sm font-semibold text-orange-800">
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="pt-2">
-                      <span className="text-gray-600 font-medium">o efectivo </span>
-                      <span className="text-3xl font-black bg-gradient-to-r from-amber-700 to-orange-700 bg-clip-text text-transparent">
-                        $30,000 MXN
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Grid de premios adicionales */}
-            <div className="grid md:grid-cols-2 gap-8 mt-12">
-              {/* Cuarto Lugar */}
-              <div className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-600 p-8 shadow-2xl hover:shadow-emerald-500/50 transition-all duration-500 hover:-translate-y-2">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700"></div>
-
-                <div className="relative space-y-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-20 h-20 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                      <span className="text-3xl font-black text-white">4°</span>
-                    </div>
-                    <h4 className="text-3xl font-black text-white flex items-center gap-2">
-                      <span>⚾</span>
-                      <span>Leones de Yucatán</span>
-                    </h4>
-                  </div>
-
-                  <p className="text-emerald-50 text-lg">
-                    4 boletos para el partido inaugural 2023
-                  </p>
-
-                  <div className="pt-2">
-                    <span className="text-emerald-100">o efectivo </span>
-                    <span className="text-2xl font-black text-white">$1,500 MXN</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Premio de Consolación */}
-              <div className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-pink-500 to-rose-600 p-8 shadow-2xl hover:shadow-pink-500/50 transition-all duration-500 hover:-translate-y-2">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700"></div>
-
-                <div className="relative space-y-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-20 h-20 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                      <span className="text-4xl">💝</span>
-                    </div>
-                    <h4 className="text-3xl font-black text-white">
-                      Premio Consolación
-                    </h4>
-                  </div>
-
-                  <p className="text-pink-50 text-lg">
-                    Para el último lugar de la quiniela
-                  </p>
-
-                  <div className="pt-2">
-                    <span className="text-3xl font-black text-white">$10,000 MXN</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <PremiosSection />
         </Section>
 
         {/* Resultados Section */}
@@ -324,7 +91,7 @@ export default function LandingPage() {
 
         {/* CTA Section */}
         <section className="py-20 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 via-teal-600 to-sky-600"></div>
+          <div className="absolute inset-0 bg-linear-to-r from-blue-600 via-cyan-600 to-blue-600"></div>
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
@@ -344,15 +111,24 @@ export default function LandingPage() {
           </div>
         </section>
       </Content>
-      <AppFooter />
+
+      {/* AppFooter recibe la función para abrir el modal de Reglamento */}
+      <AppFooter onOpenRegulation={() => setRegulationOpen(true)} />
+
+      <InfoModal
+        visible={infoOpen}
+        onClose={() => setInfoOpen(false)}
+      />
+
+      <RegulationModal visible={regulationOpen} onClose={() => setRegulationOpen(false)} />
 
       {/* Botón Volver al Inicio */}
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full shadow-2xl hover:shadow-emerald-500/50 hover:scale-110 transition-all duration-300 flex items-center justify-center z-50 animate-fade-in"
+          className="fixed bottom-8 right-8 w-14 h-14 bg-linear-to-br from-cyan-500 to-blue-600 rounded-full shadow-2xl hover:shadow-emerald-500/50 hover:scale-110 transition-all duration-300 flex items-center justify-center z-50 animate-fade-in"
           aria-label="Volver al inicio"
-          style={{ color: 'white' }}
+          style={{ color: "white" }}
         >
           <ArrowUpOutlined className="text-2xl" />
         </button>
