@@ -7,10 +7,11 @@ const prizes = [
         subtitle: "CDMX 2026",
         tags: ["2 boletos de avión", "3 noches de hotel", "2 entradas al evento"],
         cash: "$85,000 MXN",
+        imagePosition: "center 55%",
         gradientFrom: "#f59e0b",
         gradientTo: "#ea580c",
         tagStyle: "bg-white/20 text-white border-white/20",
-        image: "https://png.pngtree.com/thumb_back/fw800/background/20260129/pngtree-dynamic-action-shot-of-a-blue-formula-1-race-car-speeding-image_21104440.webp",
+        image: "https://www.eluniversal.com.mx/resizer/v2/T6XFRZWBT5FAZIBVFOLCJJGUTU.jpg?auth=835a8b38321a25fea9a369a2b84cd76761195a5ea7911c3e5720eb049712ce83&smart=true&height=620",
     },
     {
         place: "2°",
@@ -18,10 +19,11 @@ const prizes = [
         subtitle: "Nueva York",
         tags: ["Vuelos Mérida-NY", "3 noches de hotel", "2 boletos US Open"],
         cash: "$50,000 MXN",
+        imagePosition: "center 30%",
         gradientFrom: "#64748b",
         gradientTo: "#475569",
         tagStyle: "bg-white/20 text-white border-white/20",
-        image: "https://imagenes.elpais.com/resizer/v2/MDG73YUQFJBRPIAIVZYT2URYKE.jfif?auth=718ca3a293711ec76ca46d3de89e9c5c787a4907dc91f3193d2e944700d2586a&width=1200",
+        image: "https://s3.sportstatics.com/relevo/www/multimedia/202303/24/media/cortadas/carlos-alcaraz-RwaraEkmOqWVHWdqoBv0kON-1200x648@Relevo.jpg",
     },
     {
         place: "3°",
@@ -77,7 +79,11 @@ function PrizeCard({ prize }) {
                     onLoad={() => setImgLoaded(true)}
                     className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-100 ${imgLoaded ? "opacity-100" : "opacity-0"
                         }`}
+                    style={{
+                        objectPosition: prize.imagePosition || "center"
+                    }}
                 />
+
                 {/* Gradient overlay that fades from solid color on left to transparent on right */}
                 <div
                     className="absolute inset-0"
