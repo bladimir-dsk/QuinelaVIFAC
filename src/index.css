@@ -1,69 +1,131 @@
 @import "tailwindcss";
-/* :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+    font-family: 'Outfit', sans-serif;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+body,
+html {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+@font-face {
+    font-family: Nura Extra Bold;
+    src: url('./assets/fonts/Nura-Extra-Bold.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.font-titulo {
+  font-family: 'Nura Extra Bold', sans-serif;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* Scrollbar base */
+*::-webkit-scrollbar {
+    width: 10px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */
+
+/* ==== MODO CLARO ==== */
+:root {
+    --scroll-track: #e5e7eb;
+    /* gris claro */
+    --scroll-thumb: #2b7fff;
+}
+
+/* ==== MODO OSCURO ==== */
+.dark {
+    --scroll-track: #1f2937;
+    /* gris oscuro */
+    --scroll-thumb: #2b7fff;
+}
+
+/* Chrome, Edge, Opera */
+*::-webkit-scrollbar-track {
+    background: var(--scroll-track);
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--scroll-thumb);
+    border-radius: 8px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: var(--scroll-thumb);
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+}
+
+
+/* Estilos personalizados para los inputs de Ant Design */
+
+/* Estado normal */
+.inputAntd.ant-input-affix-wrapper {
+    border-color: #d9d9d9;
+    transition: all 0.3s;
+}
+
+/* Estado hover */
+.inputAntd.ant-input-affix-wrapper:hover {
+    border-color: #00b8db;
+}
+
+/* Estado focus */
+.inputAntd.ant-input-affix-wrapper:focus,
+.inputAntd.ant-input-affix-wrapper-focused {
+    border-color: #00b8db;
+    box-shadow: 0 0 0 2px rgba(0, 184, 219, 0.2);
+}
+
+
+/* Estilos personalizados para los botones de Ant Design */
+
+/* Botón primario personalizado */
+.butomAntd.ant-btn-primary {
+    background-color: #00b8db;
+    border-color: #00b8db;
+    transition: all 0.3s;
+}
+
+/* Hover */
+.butomAntd.ant-btn-primary:hover {
+    background-color: #0195b3 !important;
+    border-color: #0195b3 !important;
+}
+
+/* Focus */
+.butomAntd.ant-btn-primary:focus {
+    background-color: #00b8db;
+    border-color: #00b8db;
+}
+
+/* Active (cuando se hace clic) */
+.butomAntd.ant-btn-primary:active {
+    background-color: #008fa8 !important;
+    border-color: #008fa8 !important;
+}
+
+/* Estado loading (opcional) */
+.butomAntd.ant-btn-primary.ant-btn-loading {
+    background-color: #00b8db;
+    border-color: #00b8db;
+}
+
+/* ------------------------------------------------ */
+
+/* Estilos SOLO para componentes de Ant Design en dark mode */
+
+/* Hover para el botón OK del modal de confirmación */
+.ant-modal-confirm .ant-btn-primary:hover {
+  background-color: #006600 !important; /* verde más oscuro */
+  border-color: #006600 !important;
+}
